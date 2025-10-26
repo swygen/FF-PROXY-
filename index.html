@@ -269,13 +269,13 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
-  <title>SWYGEN - Pro Mobile Order</title>
+  <title>SWYGEN - Pro Mobile Order (Optimized)</title>
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
 
@@ -284,21 +284,20 @@
     1. Base & Utilities (Mobile First) 
     ------------------------------------- */
     :root{
-      --bg:#f8f9fa; /* Light background */
+      --bg:#f8f9fa;
       --card:#ffffff;
       --accent:#007bff; /* Primary Blue */
-      --accent-2:#0056b3; /* Darker Blue for hover */
+      --accent-2:#0056b3; 
       --success:#28a745; /* Green */
       --muted:#6c757d;
       --danger:#dc3545;
-      --radius:12px;
+      --radius:10px;
       --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
       --font:'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
     }
-    *{box-sizing:border-box; -webkit-tap-highlight-color: transparent;}
-    body{margin:0;font-family:var(--font);background:var(--bg);color:#343a40;line-height:1.5; padding-bottom: 50px;}
+    *{box-sizing:border-box;}
+    body{margin:0;font-family:var(--font);background:var(--bg);color:#343a40;line-height:1.5; padding-bottom: 20px;}
     
-    /* Main App Wrapper - Flexible width for all devices */
     .wrap{max-width:768px;margin:0 auto;padding:0;} 
     
     /* Header - Professional Look */
@@ -310,7 +309,7 @@
         margin-bottom: 20px;
         display: flex;
         align-items: center;
-        position: sticky; /* Stays at top on mobile scroll */
+        position: sticky;
         top: 0;
         z-index: 100;
     }
@@ -331,9 +330,9 @@
     2. Product List & Cards (Responsive)
     ------------------------------------- */
     #app-content {padding: 0 15px;}
-    #product-list{display:grid;gap:15px; grid-template-columns: 1fr;} /* Default: 1 column for mobile */
+    #product-list{display:grid;gap:15px; grid-template-columns: 1fr;}
     @media (min-width:576px){
-        #product-list{grid-template-columns: repeat(2, 1fr); gap: 20px;} /* 2 columns for tablet/desktop */
+        #product-list{grid-template-columns: repeat(2, 1fr); gap: 20px;}
     }
     
     .card{ background:var(--card); border-radius:var(--radius); overflow: hidden; box-shadow: var(--shadow); transition: transform 0.3s ease; border: 1px solid #e9ecef; }
@@ -343,22 +342,12 @@
     .price{font-weight:900;color:var(--success);font-size:22px; margin-top: 8px;}
     .actions{ display:flex; gap:10px; margin-top:15px; padding-top: 15px; border-top: 1px dashed #e9ecef; }
     
-    button.btn{ 
-        flex:1; 
-        padding:12px; 
-        border-radius:8px; 
-        border:0; 
-        font-weight:600; 
-        cursor:pointer; 
-        transition: background 0.2s, transform 0.1s; 
-        font-size: 15px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
+    button.btn{ flex:1; padding:12px; border-radius:8px; border:0; font-weight:600; cursor:pointer; font-size: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
     .btn-buy{background:var(--success);color:#fff}
     .btn-details{background:var(--accent);color:#fff}
 
     /* -------------------------------------
-    3. Order Form Styles (Adaptive)
+    3. Order Form Styles 
     ------------------------------------- */
     .form-container{
         background: var(--card);
@@ -367,7 +356,6 @@
         box-shadow: var(--shadow);
         border: 1px solid #e9ecef;
     }
-    
     input[type="text"], input[type="tel"], select {
         width:100%;
         padding:14px;
@@ -375,11 +363,6 @@
         border:1px solid #ced4da;
         font-size:16px;
         margin-bottom:15px;
-        transition: border-color 0.3s;
-    }
-    input:focus, select:focus {
-        border-color: var(--accent);
-        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
     }
     label{font-weight:700;font-size:15px;margin-bottom:8px;display:block;color:#343a40}
 
@@ -395,34 +378,19 @@
         font-weight: 800;
         color: var(--danger);
         font-size: 24px;
-        margin: 10px 0;
-        text-align: center;
-        padding: 8px;
-        border: 3px dashed var(--danger);
-        border-radius: 6px;
-        background: #fff;
     }
     .account-row {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 10px;
-        padding: 10px;
-        background: #f8f9fa;
-        border-radius: 6px;
     }
-    .account-row strong { font-size: 15px; }
     .copy-btn {
         padding: 8px 12px;
         background: var(--accent);
         color: #fff;
-        border: none;
         border-radius: 4px;
         font-size: 14px;
-        font-weight: 700;
     }
-
-    /* Submit Button */
     .btn-submit {
         width: 100%;
         padding: 15px;
@@ -433,22 +401,47 @@
         border: none;
         border-radius: 10px;
         margin-top: 20px;
-        cursor: pointer;
     }
 
     /* -------------------------------------
-    4. Receipt Styles 
+    4. Receipt Styles (Optimized for Screenshot) 
     ------------------------------------- */
-    #receipt-to-download {
+    .receipt-info {
+        border: 2px solid var(--success); /* Green border for professional receipt look */
         padding: 20px;
-        border: 2px solid var(--success);
-        border-radius: 10px;
+        border-radius: var(--radius);
+        margin-bottom: 20px;
+        background: #f8f9fa;
+        /* Ensure max-width is set for clean screenshot */
+        max-width: 100%; 
     }
-    .receipt-info div {
-        margin-bottom: 5px;
+    .receipt-info h3 {
+        color: var(--success);
+        border-bottom: 2px solid var(--success);
+        padding-bottom: 10px;
+        margin-top: 0;
+        font-size: 20px;
+        text-align: center;
     }
-    .receipt-info strong {
-        color: var(--accent);
+    .receipt-info p {
+        margin: 5px 0;
+        font-size: 15px;
+        display: flex;
+        justify-content: space-between;
+    }
+    .receipt-info p strong {
+        color: #343a40;
+    }
+    .receipt-info .price-tag {
+        font-size: 26px;
+        font-weight: 900;
+        color: var(--danger);
+        margin-top: 15px;
+        display: block;
+        text-align: center;
+        padding: 10px;
+        border: 2px dashed var(--danger);
+        border-radius: 5px;
     }
 
     footer.small{font-size:12px;color:var(--muted);text-align:center;padding:15px;}
@@ -462,7 +455,7 @@
     <div id="app-content">
         </div>
 
-    <footer class="small">© SWYGEN — অর্ডার শেষে অবশ্যই রসিদ ডাউনলোড করে রাখুন।</footer>
+    <footer class="small">© SWYGEN — অর্ডার শেষে অবশ্যই রসিদ সেভ করে রাখুন।</footer>
   </div>
 
   <script>
@@ -486,6 +479,7 @@
     // --------------------------
     const appContent = document.getElementById('app-content');
     
+    // Static data (You should load this dynamically if possible)
     const products = [
             {
                 id: "SWY-001",
@@ -534,20 +528,23 @@
             }
   ];
 
+
     const paymentAccounts = {
         'bKash': { number: '01775716460', icon: 'fa-solid fa-mobile-screen' },
         'Nagad': { number: '01855966005', icon: 'fa-solid fa-money-check-dollar' },
         'Rocket': { number: '01829261192', icon: 'fa-solid fa-sack-dollar' }
     };
+    
+    // CUSTOM WHATSAPP LINK FOR CUSTOMER SUPPORT
+    const SUPPORT_WHATSAPP_LINK = 'https://wa.me/message/3CECY4PPRT6TO1';
 
     // --------------------------
     // CORE FUNCTIONS
     // --------------------------
 
-    // Function to render the main product list page
     function renderProductList() {
         document.getElementById('main-header').innerHTML = '<h1><i class="fa-solid fa-square-poll-vertical fa-beat-fade"></i> SWYGEN PREMIUM SERVICE LIST</h1>';
-        window.scrollTo(0, 0); // Scroll to top
+        window.scrollTo(0, 0);
 
         let productHTML = '<div id="product-list">';
         products.forEach(p => {
@@ -569,11 +566,9 @@
         productHTML += '</div>';
         appContent.innerHTML = productHTML;
 
-        // Re-attach event listeners after rendering
         document.getElementById('product-list').addEventListener('click', handleProductActions);
     }
     
-    // Function to handle Buy/Details clicks
     function handleProductActions(e) {
         const btn = e.target.closest('button');
         if (!btn) return;
@@ -583,7 +578,6 @@
         if (btn.dataset.action === 'buy') {
             renderOrderForm(product);
         } else if (btn.dataset.action === 'details') {
-            // Use SweetAlert for details pop-up
             Swal.fire({
                 title:`<i class="fa-solid fa-magnifying-glass"></i> ${product.name}`, 
                 html:`
@@ -598,13 +592,12 @@
         }
     }
 
-    // Function to render the new order form page
     function renderOrderForm(product) {
         document.getElementById('main-header').innerHTML = `
             <button onclick="renderProductList()"><i class="fa-solid fa-arrow-left"></i></button>
             <h2><i class="fa-solid fa-file-invoice-dollar"></i> Confirm Order</h2>
         `;
-        window.scrollTo(0, 0); // Scroll to top
+        window.scrollTo(0, 0);
 
         const formHTML = `
             <div class="form-container">
@@ -617,7 +610,7 @@
                     <input type="text" id="ord_name" placeholder="আপনার নাম" required>
                     
                     <label><i class="fa-brands fa-whatsapp"></i> WhatsApp Number</label>
-                    <input type="tel" id="ord_whatsapp" placeholder="+8801XXXXXXXXX" pattern="[0-9]{11,14}" required>
+                    <input type="tel" id="ord_whatsapp" placeholder="+8801XXXXXXXXX" pattern="[0-9+]{11,15}" required>
                     
                     <label><i class="fa-solid fa-credit-card"></i> Payment Method</label>
                     <select id="ord_payment">
@@ -628,10 +621,10 @@
                     </select>
 
                     <div id="paymentInfo" style="display:none;">
-                        <p style="color:var(--danger); font-weight:700; font-size:16px;"><i class="fa-solid fa-triangle-exclamation"></i> গুরুত্বপূর্ণ: অর্ডার নিশ্চিত করতে নিচে দেওয়া নম্বরে **সেন্ড মানি** করুন।</p>
+                        <p style="color:var(--danger); font-weight:700; font-size:16px; margin-bottom: 15px;"><i class="fa-solid fa-triangle-exclamation"></i> গুরুত্বপূর্ণ: অর্ডার নিশ্চিত করতে নিচে দেওয়া নম্বরে **সেন্ড মানি** করুন।</p>
                         
                         <label style="color:var(--danger); font-size:18px;">মোট পরিশোধের পরিমাণ:</label>
-                        <div class="send-amount"><i class="fa-solid fa-sack-dollar"></i> ${product.displayPrice}</div>
+                        <div class="send-amount text-center"><i class="fa-solid fa-sack-dollar"></i> ${product.displayPrice}</div>
 
                         <div id="accountDetails"></div>
                         
@@ -650,15 +643,13 @@
         `;
         appContent.innerHTML = formHTML;
 
-        // Attach event listeners for dynamic form elements
         const paymentSelect = document.getElementById('ord_payment');
         paymentSelect.addEventListener('change', () => updatePaymentInfo(product));
-        updatePaymentInfo(product); // Initial load
+        updatePaymentInfo(product);
 
         document.getElementById('orderForm').addEventListener('submit', (e) => handleFormSubmit(e, product));
     }
     
-    // Function to dynamically update payment details
     function updatePaymentInfo(product) {
         const paymentSelect = document.getElementById('ord_payment');
         const paymentInfoDiv = document.getElementById('paymentInfo');
@@ -686,7 +677,6 @@
         }
     }
 
-    // Function for reliable copying (Globalized for access from HTML)
     window.copyToClipboard = function(text, elementId) {
         const textarea = document.createElement('textarea');
         textarea.value = text;
@@ -700,7 +690,7 @@
         try {
             const successful = document.execCommand('copy');
             if (successful) {
-                Swal.fire({toast:true,position:'top-end',icon:'success',title:'নম্বর কপি করা হয়েছে!',showConfirmButton:false,timer:1500});
+                Swal.fire({toast:true,position:'top-end',icon:'success',title:'নম্বর/লেখা কপি করা হয়েছে!',showConfirmButton:false,timer:1500});
                 
                 const btn = document.getElementById(elementId);
                 if(btn){
@@ -711,11 +701,10 @@
                 throw new Error('Copy command failed');
             }
         } catch (err) {
-            console.error('Copy failed: ', err);
             Swal.fire({
                 icon:'warning',
                 title:'কপি করতে সমস্যা',
-                text:`এই নম্বরটি ম্যানুয়ালি কপি করুন: ${text}`,
+                text:`এই লেখাটি ম্যানুয়ালি কপি করুন: ${text}`,
                 confirmButtonText: 'ঠিক আছে'
             });
         } finally {
@@ -723,7 +712,6 @@
         }
     }
 
-    // Function to handle form submission
     function handleFormSubmit(e, product) {
         e.preventDefault();
 
@@ -760,76 +748,123 @@
           
         db.collection('orders').add(orderData).then(docRef=>{
             Swal.close();
-            renderReceipt(docRef.id, orderData, product);
+            renderReceipt(docRef.id, orderData);
         }).catch(err=>{
-            console.error(err);
             Swal.fire({icon:'error',title:'Error',text:'অর্ডার জমা দিতে ব্যর্থ হয়েছে। আবার চেষ্টা করুন।'});
         });
     }
 
-    // Function to download receipt as image
-    function downloadReceipt(element, filename) {
-        const scale = 2; 
-        domtoimage.toPng(element, {
-            width: element.clientWidth * scale,
-            height: element.clientHeight * scale,
-            style: {
-                transform: 'scale(' + scale + ')',
-                transformOrigin: 'top left'
-            }
-        })
-        .then(function (dataUrl) {
-            var link = document.createElement('a');
-            link.download = filename;
-            link.href = dataUrl;
+    /**
+     * Attempts to take a screenshot of the receipt area and downloads it.
+     */
+    function takeReceiptScreenshot(orderId) {
+        Swal.fire({title:'<i class="fa-solid fa-image fa-beat"></i> রসিদ সেভ করা হচ্ছে...', allowOutsideClick:false, didOpen:()=>Swal.showLoading()});
+        
+        const receiptElement = document.getElementById('receipt-content');
+        
+        html2canvas(receiptElement, {
+            scale: 2, // High resolution
+            logging: false,
+            useCORS: true,
+            backgroundColor: '#f8f9fa' // Use receipt background color
+        }).then(canvas => {
+            const image = canvas.toDataURL('image/png');
+            const link = document.createElement('a');
+            
+            link.download = `SWYGEN_Receipt_${orderId}.png`;
+            link.href = image;
+            
+            // Attempt to trigger download
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
-        })
-        .catch(function (error) {
-            console.error('Receipt download failed!', error);
-            Swal.fire({icon:'error',title:'ডাউনলোড ব্যর্থ',text:'রসিদ ইমেজ তৈরি করা যায়নি।'});
+            
+            Swal.fire({
+                icon: 'success',
+                title: 'রসিদ ডাউনলোড শুরু হয়েছে!',
+                text: 'ফাইলটি আপনার গ্যালারি বা ডাউনলোড ফোল্ডারে সেভ হয়েছে।',
+                timer: 3000,
+                showConfirmButton: false
+            });
+            
+        }).catch(error => {
+            console.error("Screenshot failed: ", error);
+            Swal.fire({
+                icon: 'warning',
+                title: 'স্ক্রিনশট ব্যর্থ!',
+                text: 'আপনার ব্রাউজার/অ্যাপ নিরাপত্তার জন্য ইমেজ ডাউনলোড ব্লক করেছে। অনুগ্রহ করে "Copy Receipt Text" বা "Save/Print" অপশনটি ব্যবহার করুন।',
+                confirmButtonText: 'ঠিক আছে'
+            });
         });
     }
 
-    // Function to render the success/receipt page
-    function renderReceipt(orderId, order, product) {
+
+    function renderReceipt(orderId, order) {
         document.getElementById('main-header').innerHTML = `
             <button onclick="renderProductList()"><i class="fa-solid fa-arrow-left"></i></button>
             <h2><i class="fa-solid fa-circle-check"></i> Order Successful!</h2>
         `;
-        window.scrollTo(0, 0); // Scroll to top
+        window.scrollTo(0, 0);
 
         const createdTime = new Date().toLocaleString('bn-BD', { timeZone: 'Asia/Dhaka' });
 
         const receiptHTML = `
             <div class="form-container">
-                <div id="receipt-to-download" style="padding:25px; background:#fff; border:2px solid var(--success); border-radius:10px;">
-                    <h3 style="text-align:center; color:var(--success); margin-bottom:20px; border-bottom: 2px solid var(--success); padding-bottom: 10px; font-size: 24px;"><i class="fa-solid fa-receipt"></i> FF SERVICE ORDER RECEIPT </h3>
-                    <div class="receipt-info" style="font-size:16px; line-height: 2.0;">
-                        <div style="font-size:20px; font-weight:700; color:var(--accent); margin-bottom: 10px;"><i class="fa-solid fa-box"></i> Product: ${product.name}</div>
-                        <div style="background:#e9f7ee; padding: 10px; border-radius: 6px;"><strong>Order ID:</strong> <span style="color:var(--danger); font-weight: 700;">${orderId}</span></div>
-                        <div><strong>Price:</strong> <span style="color:var(--success); font-weight:800; font-size:24px;">${order.price}</span></div>
-                        <hr style="border:0; border-top:1px dashed #ced4da; margin:15px 0;">
-                        <div><i class="fa-solid fa-user"></i> <strong>Customer:</strong> ${order.customerName}</div>
-                        <div><i class="fa-brands fa-whatsapp"></i> <strong>WhatsApp:</strong> ${order.whatsappNumber}</div>
-                        <div><i class="fa-solid fa-money-bill-transfer"></i> <strong>Payment:</strong> ${order.paymentType}</div>
-                        ${order.paymentType !== 'Cash on Delivery' ? 
-                            `<div><i class="fa-solid fa-hashtag"></i> <strong>TXN ID:</strong> <span style="color:var(--danger); font-weight:700;">${order.transactionId}</span></div>` : ''}
-                        <div style="padding-top:10px; color:var(--muted); font-size:14px;"><strong>Time:</strong> ${createdTime}</div>
+                <div id="receipt-content">
+                    <div class="receipt-info">
+                        <h3 style="text-align:center;"><i class="fa-solid fa-receipt"></i> SWYGEN Order Receipt</h3>
+                        
+                        <p><strong>Order ID:</strong> <span style="color:var(--danger); font-weight: 700;">${orderId}</span></p>
+                        <p><strong>Product:</strong> <span>${order.productName}</span></p>
+                        <p><strong>Customer:</strong> <span>${order.customerName}</span></p>
+                        <p><strong>WhatsApp:</strong> <span>${order.whatsappNumber}</span></p>
+                        <p><strong>Payment Method:</strong> <span>${order.paymentType}</span></p>
+                        ${order.transactionId !== 'N/A' ? 
+                            `<p><strong>TXN ID:</strong> <span style="color:var(--danger);">${order.transactionId}</span></p>` : ''}
+                        <p><strong>Time:</strong> <span>${createdTime}</span></p>
+                        <span class="price-tag">Total: ${order.price}</span>
                     </div>
                 </div>
+
                 <div style="display:flex;flex-direction:column;gap:15px;margin-top:30px;">
-                    <button id="downloadReceiptBtn" class="btn" style="background:var(--accent-2);color:#fff;"><i class="fa-solid fa-cloud-arrow-down"></i> রসিদ ডাউনলোড করুন (PNG)</button>
-                    <a href="https://wa.me/message/3CECY4PPRT6TO1?text=${encodeURIComponent('Hello SWYGEN, I have placed an order. My Order ID is: '+orderId + '. Please check my order details. Thank you.')}" target="_blank" class="btn" style="background:#25D366;color:#fff;text-decoration:none;text-align:center;"><i class="fa-brands fa-whatsapp"></i> WhatsApp এ যোগাযোগ করুন</a>
+                    <button id="screenshotReceiptBtn" class="btn" style="background:var(--success);color:#fff;"><i class="fa-solid fa-camera"></i> রসিদ স্ক্রিনশট নিন (PNG)</button>
+                    
+                    <button id="copyReceiptBtn" class="btn" style="background:var(--accent);color:#fff;"><i class="fa-solid fa-copy"></i> Copy Receipt Text</button>
+                    
+                    <button id="printReceiptBtn" class="btn" style="background:var(--muted);color:#fff;"><i class="fa-solid fa-print"></i> Save/Print Receipt (PDF)</button>
+
+                    <a href="${SUPPORT_WHATSAPP_LINK}" target="_blank" class="btn" style="background:#25D366;color:#fff;text-decoration:none;text-align:center;"><i class="fa-brands fa-whatsapp"></i> WhatsApp এ যোগাযোগ করুন</a>
                 </div>
+                <p style="text-align:center; font-size:13px; color:var(--danger); margin-top:20px;">
+                    *স্ক্রিনশট ব্যর্থ হলে, অনুগ্রহ করে "Save/Print" অপশনটি ব্যবহার করুন।
+                </p>
             </div>
         `;
         appContent.innerHTML = receiptHTML;
 
-        document.getElementById('downloadReceiptBtn').addEventListener('click', () => {
-            const receiptElement = document.getElementById('receipt-to-download');
-            downloadReceipt(receiptElement, `SWYGEN_Order_${orderId}.png`);
+        // Event Listeners
+        document.getElementById('screenshotReceiptBtn').addEventListener('click', () => takeReceiptScreenshot(orderId));
+        
+        document.getElementById('printReceiptBtn').addEventListener('click', () => {
+            // Uses the browser's default print dialog to save as PDF
+            window.print(); 
+        });
+        
+        document.getElementById('copyReceiptBtn').addEventListener('click', () => {
+            const receiptText = `
+                --- SWYGEN Order Receipt ---
+                Order ID: ${orderId}
+                Product: ${order.productName}
+                Price: ${order.price}
+                Customer: ${order.customerName}
+                WhatsApp: ${order.whatsappNumber}
+                Payment Method: ${order.paymentType}
+                ${order.transactionId !== 'N/A' ? `TXN ID: ${order.transactionId}` : ''}
+                Time: ${createdTime}
+                --- End of Receipt ---
+            `.trim();
+            
+            window.copyToClipboard(receiptText, 'copyReceiptBtn');
         });
     }
 
@@ -838,7 +873,6 @@
   </script>
 </body>
 </html>
-
 <!DOCTYPE html>
 <html lang="bn">
 <head>
