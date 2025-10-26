@@ -326,6 +326,17 @@
         margin-right: 10px;
     }
 
+    /* Print Header/Banner Style */
+    #print-banner {
+        display: none; /* Hidden by default */
+        width: 100%;
+        max-width: 768px; 
+        height: auto;
+        margin: 0 auto;
+        object-fit: cover;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
     /* -------------------------------------
     2. Product List & Cards (Responsive)
     ------------------------------------- */
@@ -404,15 +415,14 @@
     }
 
     /* -------------------------------------
-    4. Receipt Styles (Optimized for Screenshot) 
+    4. Receipt Styles 
     ------------------------------------- */
     .receipt-info {
-        border: 2px solid var(--success); /* Green border for professional receipt look */
+        border: 2px solid var(--success); 
         padding: 20px;
         border-radius: var(--radius);
         margin-bottom: 20px;
         background: #f8f9fa;
-        /* Ensure max-width is set for clean screenshot */
         max-width: 100%; 
     }
     .receipt-info h3 {
@@ -443,7 +453,113 @@
         border: 2px dashed var(--danger);
         border-radius: 5px;
     }
+    
+    .receipt-info .pending-status {
+        font-size: 14px;
+        font-weight: 600;
+        color: #ffc107; 
+        background: #fff8e1;
+        padding: 10px;
+        border-radius: 5px;
+        margin-top: 15px;
+        text-align: center;
+        border: 1px solid #ffecb3;
+    }
+    
+    /* Style for Screenshot Instruction */
+    .screenshot-instruction {
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--accent);
+        background: #e9f5ff; 
+        padding: 15px;
+        border-radius: var(--radius);
+        margin-top: 25px;
+        text-align: center;
+        border: 2px dashed var(--accent);
+        line-height: 1.6;
+    }
+    
+    /* Style for WhatsApp Contact Button */
+    .receipt-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        margin-top: 20px;
+    }
+    .btn-whatsapp {
+        background: #25D366;
+        color: #fff;
+        text-decoration: none;
+        text-align: center;
+        padding: 15px;
+        border-radius: 8px;
+        font-weight: 700;
+        font-size: 17px;
+        transition: background 0.2s;
+    }
+    .btn-whatsapp:hover {
+        background: #1eaf53;
+    }
 
+    /* -------------------------------------
+    5. Print/PDF Specific Styles 
+    ------------------------------------- */
+    @media print {
+        /* Hide everything on the page by default */
+        body * {
+            visibility: hidden;
+            background-color: transparent !important; 
+        }
+
+        /* Show the specific content we want to print */
+        #print-area, #print-area * {
+            visibility: visible;
+        }
+
+        /* Ensure print-area takes full width and positions correctly */
+        #print-area {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            background: #fff !important; 
+        }
+        
+        /* Style the banner/header for print */
+        #print-banner {
+            display: block !important; 
+            width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        /* Style the receipt content for print */
+        #print-area .form-container {
+            padding: 20px;
+            box-shadow: none;
+            border: none;
+        }
+
+        /* Hide the screenshot instruction and WhatsApp button in the actual print output (PDF) */
+        #print-area .screenshot-instruction,
+        #print-area .receipt-actions {
+            display: none !important;
+        }
+
+        /* Ensure receipt text is black */
+        .receipt-info p strong, .receipt-info p span {
+             color: #000 !important;
+        }
+
+        /* Remove padding from body/wrap to maximize content area */
+        body, .wrap {
+            padding: 0;
+        }
+    }
+    
     footer.small{font-size:12px;color:var(--muted);text-align:center;padding:15px;}
   </style>
 </head>
@@ -451,6 +567,8 @@
   <div class="wrap">
     <header id="main-header">
       </header>
+      
+    <img id="print-banner" src="https://i.postimg.cc/pLyb86Tr/Picsart-25-10-26-09-07-31-949-imgupscaler-ai-General-8K.jpg" alt="SWYGEN Official Banner">
 
     <div id="app-content">
         </div>
@@ -478,7 +596,8 @@
     // GLOBAL DATA
     // --------------------------
     const appContent = document.getElementById('app-content');
-    
+    const BANNER_IMAGE_URL = 'https://i.postimg.cc/pLyb86Tr/Picsart-25-10-26-09-07-31-949-imgupscaler-ai-General-8K.jpg'; // Specified Banner
+
     // Static data (You should load this dynamically if possible)
     const products = [
             {
@@ -527,7 +646,6 @@
                 details: "আমাদের FF MAIN ID GLITCH [OB50]  আপনার FREE FIRE গেম  আইডি কে আরো রোমাঞ্চকর ও PRO  করে তুলবে! <b>মাত্র ৪৫০ টাকায় </b>**100% BUG FIX ** সকল ANDROID ফোন এ সাপোর্ট করবে ।\n\n**ফিচার্স:**\n-  ১০০% Working GLITCH ফাইল \n- মেইন আইডি তে লাগতে পারবেন\n- ANTIBAN  প্রটেকশন ( আইডির কোন সমস্যা হবে না ) \n- সব GUN SKIN/DRESS UP SKIN / PET SKIN / সব নিতে পারবেন\n-  SESSION - 1 থেকে এখান পর্যন্ত আসা সকল কালেকশন নিতে পারবেন \n-  ঝামেলা ছাড়াই Set Up করুন একদম সহজে\n ",
             }
   ];
-
 
     const paymentAccounts = {
         'bKash': { number: '01775716460', icon: 'fa-solid fa-mobile-screen' },
@@ -754,51 +872,6 @@
         });
     }
 
-    /**
-     * Attempts to take a screenshot of the receipt area and downloads it.
-     */
-    function takeReceiptScreenshot(orderId) {
-        Swal.fire({title:'<i class="fa-solid fa-image fa-beat"></i> রসিদ সেভ করা হচ্ছে...', allowOutsideClick:false, didOpen:()=>Swal.showLoading()});
-        
-        const receiptElement = document.getElementById('receipt-content');
-        
-        html2canvas(receiptElement, {
-            scale: 2, // High resolution
-            logging: false,
-            useCORS: true,
-            backgroundColor: '#f8f9fa' // Use receipt background color
-        }).then(canvas => {
-            const image = canvas.toDataURL('image/png');
-            const link = document.createElement('a');
-            
-            link.download = `SWYGEN_Receipt_${orderId}.png`;
-            link.href = image;
-            
-            // Attempt to trigger download
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            
-            Swal.fire({
-                icon: 'success',
-                title: 'রসিদ ডাউনলোড শুরু হয়েছে!',
-                text: 'ফাইলটি আপনার গ্যালারি বা ডাউনলোড ফোল্ডারে সেভ হয়েছে।',
-                timer: 3000,
-                showConfirmButton: false
-            });
-            
-        }).catch(error => {
-            console.error("Screenshot failed: ", error);
-            Swal.fire({
-                icon: 'warning',
-                title: 'স্ক্রিনশট ব্যর্থ!',
-                text: 'আপনার ব্রাউজার/অ্যাপ নিরাপত্তার জন্য ইমেজ ডাউনলোড ব্লক করেছে। অনুগ্রহ করে "Copy Receipt Text" বা "Save/Print" অপশনটি ব্যবহার করুন।',
-                confirmButtonText: 'ঠিক আছে'
-            });
-        });
-    }
-
-
     function renderReceipt(orderId, order) {
         document.getElementById('main-header').innerHTML = `
             <button onclick="renderProductList()"><i class="fa-solid fa-arrow-left"></i></button>
@@ -809,7 +882,7 @@
         const createdTime = new Date().toLocaleString('bn-BD', { timeZone: 'Asia/Dhaka' });
 
         const receiptHTML = `
-            <div class="form-container">
+            <div id="print-area" class="form-container">
                 <div id="receipt-content">
                     <div class="receipt-info">
                         <h3 style="text-align:center;"><i class="fa-solid fa-receipt"></i> SWYGEN Order Receipt</h3>
@@ -823,49 +896,31 @@
                             `<p><strong>TXN ID:</strong> <span style="color:var(--danger);">${order.transactionId}</span></p>` : ''}
                         <p><strong>Time:</strong> <span>${createdTime}</span></p>
                         <span class="price-tag">Total: ${order.price}</span>
+                        
+                        <div class="pending-status">
+                            <i class="fa-solid fa-clock-rotate-left"></i> আপনার অর্ডারটি **PENDING** রয়েছে। অ্যাডমিনের অনুমোদনের জন্য অপেক্ষা করুন! ধন্যবাদ।
+                        </div>
                     </div>
                 </div>
 
-                <div style="display:flex;flex-direction:column;gap:15px;margin-top:30px;">
-                    
-                    
-                    <button id="copyReceiptBtn" class="btn" style="background:var(--accent);color:#fff;"><i class="fa-solid fa-copy"></i> Copy Receipt Text</button>
-                    
-                    <button id="printReceiptBtn" class="btn" style="background:var(--muted);color:#fff;"><i class="fa-solid fa-print"></i> রসিদ এর একটা স্ক্রীনশট নিন! </button>
-
-                    <a href="${SUPPORT_WHATSAPP_LINK}" target="_blank" class="btn" style="background:#25D366;color:#fff;text-decoration:none;text-align:center;"><i class="fa-brands fa-whatsapp"></i> WhatsApp এ যোগাযোগ করুন</a>
+                <div class="screenshot-instruction">
+                    <i class="fa-solid fa-camera-retro fa-xl" style="color: var(--accent);"></i>
+                    <p style="margin: 5px 0 0; font-weight: 900; color: var(--danger);">
+                        গুরুত্বপূর্ণ: অনুগ্রহ করে এই রসিদটির একটি **স্ক্রিনশট** নিয়ে নিন। 
+                        <br>
+                        পরবর্তী কোনো প্রয়োজনে এই স্ক্রিনশটটি কাজে লাগবে।
+                    </p>
                 </div>
-                <p style="text-align:center; font-size:13px; color:var(--danger); margin-top:20px;">
-                    * Receipt এর একটা SCREENSHOT নিয়ে নিন! পরবর্তী সময়ে কাজে লাগবে *
-                </p>
+                
+                <div class="receipt-actions">
+                    <a href="${SUPPORT_WHATSAPP_LINK}" target="_blank" class="btn-whatsapp"><i class="fa-brands fa-whatsapp"></i> WhatsApp এ যোগাযোগ করুন</a>
+                </div>
+                
             </div>
         `;
         appContent.innerHTML = receiptHTML;
-
-        // Event Listeners
-        document.getElementById('screenshotReceiptBtn').addEventListener('click', () => takeReceiptScreenshot(orderId));
         
-        document.getElementById('printReceiptBtn').addEventListener('click', () => {
-            // Uses the browser's default print dialog to save as PDF
-            window.print(); 
-        });
-        
-        document.getElementById('copyReceiptBtn').addEventListener('click', () => {
-            const receiptText = `
-                --- SWYGEN Order Receipt ---
-                Order ID: ${orderId}
-                Product: ${order.productName}
-                Price: ${order.price}
-                Customer: ${order.customerName}
-                WhatsApp: ${order.whatsappNumber}
-                Payment Method: ${order.paymentType}
-                ${order.transactionId !== 'N/A' ? `TXN ID: ${order.transactionId}` : ''}
-                Time: ${createdTime}
-                --- End of Receipt ---
-            `.trim();
-            
-            window.copyToClipboard(receiptText, 'copyReceiptBtn');
-        });
+        // Removed all button event listeners
     }
 
     // Initialize the application
