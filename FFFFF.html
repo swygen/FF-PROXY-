@@ -1,0 +1,1369 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Swygen Store - Advanced Header</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* বেসিক রিসেট */
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            color: #2c3e50; /* আরও গভীর টেক্সট কালার */
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            background-color: #f8f9fa; /* হালকা ব্যাকগ্রাউন্ড */
+        }
+
+        /* মূল কন্টেইনার যাতে অন্য কোডের সাথে সংঘর্ষ না হয় */
+        #swygen-app-header-container {
+            width: 100%;
+            box-sizing: border-box; /* প্যাডিং বা বর্ডার দ্বারা প্রস্থ বাড়বে না */
+            position: relative;
+            z-index: 100; /* নিশ্চিত করে যে এটি সর্বদা উপরে থাকে */
+        }
+
+        /* HEADER স্টাইল */
+        .swygen-header {
+            background: linear-gradient_to_right_rgb(255_255_255)_rgb(240_248_255); /* হালকা গ্রেডিয়েন্ট */
+            border-bottom: 4px solid #0056b3; /* গভীর নীল বর্ডার */
+            padding: 12px 20px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* উন্নত শ্যাডো */
+            position: sticky; /* স্ক্রল করার সময় উপরে লেগে থাকবে */
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            box-sizing: border-box;
+        }
+
+        /* লোগো এবং নাম সেকশন */
+        .logo-branding-time {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap; /* ছোট স্ক্রিনে উপাদান র‍্যাপ করার অনুমতি দেয় */
+            gap: 10px; /* উপাদানগুলির মধ্যে ব্যবধান */
+            width: 100%;
+        }
+
+        /* লোগো এবং স্টোরের নাম একত্রিত */
+        .brand-identity {
+            display: flex;
+            align-items: center;
+            flex-grow: 1; /* পর্যাপ্ত জায়গা দখল করা */
+            min-width: 180px; /* ছোট স্ক্রিনে ভাঙতে বাধা দেয় */
+        }
+
+        /* লোগো ইমেজ স্টাইল */
+        .logo-image {
+            width: 48px; /* লোগোর আকার বৃদ্ধি */
+            height: 48px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 12px;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.25);
+            border: 2px solid #007bff; /* লোগোকে হাইলাইট করার জন্য বর্ডার */
+            transition: transform 0.3s ease; /* হোভার ইফেক্ট */
+        }
+        .logo-image:hover {
+            transform: scale(1.05) rotate(5deg);
+        }
+
+        /* স্টোরের নাম এবং আইকন */
+        .store-name-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .store-icon {
+            color: #007bff; /* ব্র্যান্ডিং কালার */
+            font-size: 1.2em; /* আইকনের আকার */
+            margin-right: 8px;
+        }
+
+        .store-name {
+            font-size: 1.8em; /* ফন্টের আকার বৃদ্ধি */
+            font-weight: 700; /* গাঢ় ফন্ট */
+            color: #0056b3; /* গভীর নীল */
+            letter-spacing: 0.5px; /* অক্ষরের মধ্যে ব্যবধান */
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        /* টাইম জোন */
+        .time-zone {
+            display: flex;
+            align-items: center;
+            font-size: 1em;
+            color: #555;
+            white-space: nowrap;
+            background-color: #e9ecef;
+            padding: 8px 12px;
+            border-radius: 20px;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+            min-width: 200px; /* নিশ্চিত আকারের জন্য */
+            justify-content: center; /* কেন্দ্রে রাখা */
+        }
+
+        .time-icon {
+            color: #28a745;
+            margin-right: 8px;
+            font-size: 1.1em;
+        }
+
+        /* ব্যানার সেকশন */
+        .banner-section {
+            width: 100%;
+            margin-top: 15px; /* হেডার থেকে একটু বেশি দূরত্ব */
+            box-sizing: border-box;
+            padding: 0 20px; /* হেডার এর সাথে অ্যালাইনমেন্ট */
+        }
+
+        .banner-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 10px; /* আরও মসৃণ কোণ */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* গভীর শ্যাডো */
+            object-fit: cover;
+            max-height: 250px; /* ব্যানার ইমেজের সর্বোচ্চ উচ্চতা */
+        }
+
+        /* রেসপনসিভনেস: মোবাইল ডিভাইসের জন্য */
+        @media (max-width: 768px) {
+            .swygen-header {
+                padding: 10px 15px;
+            }
+            .logo-branding-time {
+                flex-direction: column; /* ছোট স্ক্রিনে উল্লম্ব স্ট্যাক */
+                align-items: flex-start; /* বাম দিকে অ্যালাইন */
+            }
+            .brand-identity {
+                width: 100%;
+                margin-bottom: 10px;
+                justify-content: center; /* মাঝখানে লোগো এবং নাম */
+            }
+            .store-name {
+                font-size: 1.6em;
+            }
+            .time-zone {
+                width: 95%; /* পুরো প্রস্থ দখল করবে */
+                font-size: 0.9em;
+                padding: 6px 10px;
+            }
+            .banner-section {
+                padding: 0 15px;
+                margin-top: 10px;
+            }
+            .banner-image {
+                border-radius: 8px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo-image {
+                width: 40px;
+                height: 40px;
+                margin-right: 8px;
+            }
+            .store-icon {
+                font-size: 1em;
+                margin-right: 5px;
+            }
+            .store-name {
+                font-size: 1.4em;
+            }
+            .time-zone {
+                font-size: 0.85em;
+                min-width: unset; /* ছোট স্ক্রিনে নির্দিষ্ট প্রস্থ সরিয়ে দেওয়া */
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div id="swygen-app-header-container">
+    <header class="swygen-header">
+        <div class="logo-branding-time">
+            <div class="brand-identity">
+                <img src="https://i.postimg.cc/7LMVLxyc/images-1-10-imgupscaler-ai-v1-Fast-2K.jpg" alt="Swygen Store Logo" class="logo-image">
+                <div class="store-name-container">
+                    <span class="store-name">FF SERVICE IN BD SERVER 
+                </div>
+            </div>
+            
+            <div class="time-zone">
+                <i class="fas fa-clock time-icon"></i>
+                <span id="current-bd-time">সময় লোড হচ্ছে...</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="banner-section">
+        <img src="https://i.postimg.cc/pLyb86Tr/Picsart-25-10-26-09-07-31-949-imgupscaler-ai-General-8K.jpg" alt="Swygen Store Banner" class="banner-image">
+    </div>
+</div>
+
+<script>
+    // **1. জুম প্রতিরোধ (Mobile-Friendly ও উন্নত মানের জন্য গুরুত্বপূর্ণ)**
+    // জুম করার জন্য সকল ইভেন্ট (টাচ, স্ক্রল, কীবোর্ড) নিষ্ক্রিয় করা
+    document.addEventListener('gesturestart', function (e) {
+        e.preventDefault();
+    }, { passive: false });
+
+    document.addEventListener('touchstart', function(e) {
+        if (e.touches.length > 1) { // দুই বা তার বেশি টাচ হলে
+            e.preventDefault();
+        }
+    }, { passive: false });
+
+    // মাউস হুইল জুম এবং Ctrl/Cmd + স্ক্রল জুম প্রতিরোধ
+    document.addEventListener('wheel', function(e) {
+        if (e.ctrlKey || e.metaKey) { // Ctrl for Windows/Linux, Cmd for Mac
+            e.preventDefault();
+        }
+    }, { passive: false });
+
+    // কীবোর্ড জুম (Ctrl/Cmd + প্লাস/মাইনাস) প্রতিরোধ
+    document.addEventListener('keydown', function(e) {
+        if ((e.ctrlKey || e.metaKey) && (e.key === '+' || e.key === '-' || e.key === '=' || e.key === '0')) {
+            e.preventDefault();
+        }
+    }, { passive: false });
+
+
+    // **2. বাংলাদেশি সময় প্রদর্শন**
+    function updateBDTime() {
+        const now = new Date();
+        const options = { 
+            timeZone: 'Asia/Dhaka', 
+            hour: '2-digit', 
+            minute: '2-digit', 
+            second: '2-digit', 
+            day: 'numeric', 
+            month: 'short', 
+            year: 'numeric',
+            hour12: true // AM/PM ফর্ম্যাট
+        };
+        const bdTime = now.toLocaleString('bn-BD', options);
+        document.getElementById('current-bd-time').textContent = bdTime;
+    }
+
+    // প্রতি সেকেন্ডে সময় আপডেট করা
+    updateBDTime();
+    setInterval(updateBDTime, 1000);
+
+</script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>SWYGEN HIGH-END Services</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        /* CSS ভেরিয়েবলস: উন্নত রঙের প্যালেট */
+        :root {
+            --primary-color: #004d99; /* Deep Professional Blue */
+            --primary-light: #007bff;
+            --success-color: #00c853; /* Bright Green */
+            --telegram-color: #0088cc; /* Telegram Blue */
+            --danger-color: #ff3d00; /* Bright Red */
+            --warning-color: #ffb300;
+            --bg-color: #f0f4f8; /* Soft White/Light Grey */
+            --card-bg: #ffffff;
+            --text-color: #263238;
+            --shadow-subtle: 0 4px 10px rgba(0, 0, 0, 0.05);
+            --shadow-deep: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* বেস স্টাইল এবং রিসেট */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            box-sizing: border-box;
+            line-height: 1.6;
+            min-height: 100vh;
+            touch-action: pan-y;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 650px; 
+            margin: 0 auto;
+            padding: 15px; 
+        }
+
+        /* হেডার স্টাইল */
+        .header {
+            text-align: center;
+            padding: 5px 0;
+            background: linear-gradient(90deg, var(--primary-color), var(--primary-light));
+            color: white;
+            margin-bottom: 15px;
+            border-radius: 12px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 2em;
+            letter-spacing: 1px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+        }
+
+        /* প্রোডাক্ট কার্ড স্টাইল */
+        .product-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: var(--shadow-subtle);
+            margin-bottom: 20px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s;
+            border: 2px solid transparent; 
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-deep);
+            border-color: var(--primary-light);
+        }
+
+        .product-image-container {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%; 
+            overflow: hidden;
+        }
+
+        .product-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 18px 20px 10px;
+        }
+
+        .product-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+        }
+
+        .product-name {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .product-id {
+            font-size: 0.9em;
+            color: #78909c;
+            font-weight: 500;
+        }
+
+        .product-stats {
+            font-size: 1em;
+            color: var(--success-color);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 8px;
+            padding: 15px 20px;
+            border-top: 1px solid #eceff1;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 12px 5px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.95em;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+            white-space: nowrap;
+        }
+
+        .buy-btn {
+            background: linear-gradient(45deg, var(--success-color), #00a142);
+            color: white;
+        }
+        .buy-btn:active {
+            transform: scale(0.98);
+        }
+
+        .details-btn {
+            background-color: var(--warning-color);
+            color: var(--text-color);
+        }
+        .details-btn:active {
+            transform: scale(0.98);
+        }
+
+        .favorite-btn {
+            background-color: #90a4ae;
+            color: white;
+        }
+        .favorite-btn.favorited {
+            background: linear-gradient(45deg, var(--danger-color), #cc0000);
+        }
+        .favorite-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* SweetAlert2 কাস্টম স্টাইল (Buy পপ-আপের ভিতরের বাটনগুলো) */
+        .buy-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        /* ⭐ BUY অপশনে বাটনগুলোর নিচের আন্ডারলাইন সরানো হয়েছে ⭐ */
+        .buy-actions a {
+            text-decoration: none; 
+        }
+
+        .swal2-whatsapp-btn {
+            background-color: #25D366 !important;
+            color: white !important;
+        }
+
+        .swal2-telegram-btn {
+            background-color: var(--telegram-color) !important;
+            color: white !important;
+        }
+        
+        .swal2-cancel-btn {
+            background-color: var(--danger-color) !important;
+            color: white !important;
+        }
+
+        /* Toast নোটিফিকেশন: ছোট, নিচে এবং দ্রুত */
+        .swal2-toast {
+            max-width: 90% !important;
+            min-width: 250px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 30px;
+        }
+        .swal2-toast .swal2-title {
+            font-size: 1em !important;
+            font-weight: 500 !important;
+            margin: 0 !important;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-user-secret"></i> SWYGEN ALL SERVICE LIST</h1>
+        </div>
+
+        <div id="product-list">
+            </div>
+    </div>
+
+    <script>
+        // প্রোডাক্ট ডেটা
+        const products = [
+            {
+                id: "SWY-001",
+                name: "Proxy Server [OB50]",
+                price: "৳ 250",
+                views: "1.5K",
+                image: "https://i.postimg.cc/wxRxN316/Picsart-25-10-26-08-03-28-892-imgupscaler-ai-General-8K.jpg",
+                details: "আমাদের Proxy Server [OB50]  আপনার FREE FIRE গেম কে আরো রোমাঞ্চকর করে তুলবে! <b> মাত্র ২৫০ টাকায়</b> **100% BUG FIX ** সকল ANDROID ফোন এ সাপোর্ট করবে ।\n\n**ফিচার্স:**\n- সকল কালেকশন - OLD কালেকশন ও SESSION - 1 থেকে সকল কালেকশন\n- UNLIMITED DIAMOND 💎\n- V BADGE \n- GMAIL / FACEBOOK  দিয়ে লগইন\n- ",
+            },
+            {
+                id: "SWY-002",
+                name: "ANTI BAN MOBILE PANEL [OB50]",
+                price: "৳ 1250",
+                views: "1.4K",
+                image: "https://i.postimg.cc/d3hhk9zt/Picsart-25-10-26-08-16-53-995-imgupscaler-ai-General-8K.jpg",
+                details: "আমাদের ANTI BAN MOBILE PANEL [OB50] আপনার FREE FIRE গেম কে আরো রোমাঞ্চকর ও PRO  করে তুলবে!<b> মাত্র ১২৫০ টাকায় </b>**100% BUG FIX ** সকল ANDROID ফোন এ সাপোর্ট করবে ।\n\n**ফিচার্স:**\n-  ১০০% সেইফ Antiban Panel \n- মেইন আইডি তে লাগাতে পারবেন \n- কেউ বুঝতে পারবে না ( HIDE HACK ) \n- সকল প্রকার TOURNAMENT খেলতে পারবেন কোন ঝামেলা ছাড়াই \n-  ১৫ দিন পর্যন্ত ঝামেলা ছাড়াই খেলতে পারবেন  \n- ",
+            },
+            {
+                id: "SWY-003",
+                name: "FF MOBILE HACK [OB50]",
+                price: "৳ 550",
+                views: "2.1K",
+                image: "https://i.postimg.cc/qRjmMkdD/Picsart-25-10-26-08-29-53-225-imgupscaler-ai-General-8K.jpg",
+                details: "আমাদের FF MOBILE HACK [OB50] আপনার FREE FIRE গেম কে আরো রোমাঞ্চকর  করে তুলবে! <b>মাত্র ৫৫০ টাকায় </b>**100% BUG FIX ** সকল ANDROID ফোন এ সাপোর্ট করবে ।\n\n**ফিচার্স:**\n-  ১০০% Working হ্যাক\n- সব ম্যাপ খেলতে পারবেন\n- BR/CS - সহ সবকিছু খেলতে পারবেন \n- AUTO HADE SHOT , FLY KILL , WALL HACK , AWM HACK \n-  সব GUN দিয়ে  Headshot  হবে \n-  TEAMMATES দের আইডি তে কোন সমস্যা হবে না \n ",
+            },
+            {
+                id: "SWY-004",
+                name: "FF MOBILE INJECTOR [OB50]",
+                price: "৳ 750",
+                views: "1.2K",
+                image: "https://i.postimg.cc/BZN6sRPB/Picsart-25-10-26-08-44-24-815-imgupscaler-ai-General-8K.jpg",
+                details: "আমাদের FF MOBILE INJECTOR [OB50] আপনার FREE FIRE গেম কে আরো রোমাঞ্চকর ও PRO  করে তুলবে! <b>মাত্র ৭৫০ টাকায় </b>**100% BUG FIX ** সকল ANDROID ফোন এ সাপোর্ট করবে ।\n\n**ফিচার্স:**\n-  ১০০% Working ইনজেক্টর PANEL \n- মেইন আইডি তে লাগতে পারবেন\n- ANTIBAN  প্রটেকশন ( আইডির কোন সমস্যা হবে না ) \n- সব GUN দিয়ে AIM LOCK হবে \n-  সব GUN দিয়ে  Headshot  হবে \n-  সকল প্রকার ঝামেলা ছাড়াই ৩ দিন খেলতে পারবেন\n ",
+            },
+            {
+                id: "SWY-005",
+                name: "FF MAIN ID GLITCH",
+                price: "৳ 450",
+                views: "1.9K",
+                image: "https://i.postimg.cc/yxnXyndB/1761447198343.jpg",
+                details: "আমাদের FF MAIN ID GLITCH [OB50]  আপনার FREE FIRE গেম  আইডি কে আরো রোমাঞ্চকর ও PRO  করে তুলবে! <b>মাত্র ৪৫০ টাকায় </b>**100% BUG FIX ** সকল ANDROID ফোন এ সাপোর্ট করবে ।\n\n**ফিচার্স:**\n-  ১০০% Working GLITCH ফাইল \n- মেইন আইডি তে লাগতে পারবেন\n- ANTIBAN  প্রটেকশন ( আইডির কোন সমস্যা হবে না ) \n- সব GUN SKIN/DRESS UP SKIN / PET SKIN / সব নিতে পারবেন\n-  SESSION - 1 থেকে এখান পর্যন্ত আসা সকল কালেকশন নিতে পারবেন \n-  ঝামেলা ছাড়াই Set Up করুন একদম সহজে\n ",
+            }
+        ];
+
+        const productList = document.getElementById('product-list');
+        const WHATSAPP_BASE_URL = "https://wa.me/message/3CECY4PPRT6TO1";
+        const TELEGRAM_USERNAME = "Swygen_bd";
+
+        // লোকাল স্টোরেজ ম্যানেজমেন্ট
+        const loadFavorites = () => {
+            try {
+                const favorites = localStorage.getItem('swygen_favorites');
+                return favorites ? JSON.parse(favorites) : {};
+            } catch (e) {
+                return {};
+            }
+        };
+
+        let favorites = loadFavorites();
+
+        const saveFavorites = () => {
+            try {
+                localStorage.setItem('swygen_favorites', JSON.stringify(favorites));
+            } catch (e) {
+                // Do nothing
+            }
+        };
+
+        // সব প্রোডাক্ট কার্ড তৈরি করা
+        products.forEach(product => {
+            const isFavorited = favorites[product.id];
+            const card = document.createElement('div');
+            card.className = 'product-card';
+            card.innerHTML = `
+                <div class="product-image-container">
+                    <img src="${product.image}" alt="${product.name}" class="product-image">
+                </div>
+                <div class="product-info">
+                    <div class="product-header">
+                        <div class="product-name">${product.name}</div>
+                        <div class="product-stats">
+                            <i class="fas fa-eye"></i> ${product.views}
+                        </div>
+                    </div>
+                    <div class="product-id">ID: ${product.id}</div>
+                </div>
+                <div class="product-actions">
+                    <button class="action-btn buy-btn" data-id="${product.id}" data-name="${product.name}" data-price="${product.price}" onclick="openBuyPopup(this)">
+                        <i class="fas fa-shopping-cart"></i> BUY (${product.price})
+                    </button>
+                    <button class="action-btn details-btn" data-id="${product.id}" onclick="openDetailsPopup(this)">
+                        <i class="fas fa-info-circle"></i> DETAILS
+                    </button>
+                    <button class="action-btn favorite-btn ${isFavorited ? 'favorited' : ''}" data-id="${product.id}" data-name="${product.name}" onclick="toggleFavorite(this)">
+                        <i class="fas fa-heart"></i> FAVORITE
+                    </button>
+                </div>
+            `;
+            productList.appendChild(card);
+        });
+
+        // BUY পপ-আপ (SweetAlert2) - WhatsApp এবং Telegram সহ
+        function openBuyPopup(button) {
+            const productId = button.getAttribute('data-id');
+            const productName = button.getAttribute('data-name');
+            const productPrice = button.getAttribute('data-price');
+            
+            const whatsappMessage = encodeURIComponent(`Hi Developer SWYGEN! I would like to order this ${productName} (${productId}) service. Price: ${productPrice}`);
+            const whatsappLink = `${WHATSAPP_BASE_URL}?text=${whatsappMessage}`;
+            
+            // Telegram মেসেজ লিঙ্ক (যদি টেলিগ্রাম অ্যাপ থাকে তবে কাজ করবে)
+            const telegramLink = `https://t.me/${TELEGRAM_USERNAME}`;
+
+            Swal.fire({
+                title: 'BUY TO CONTACT SWYGEN',
+                imageUrl: products.find(p => p.id === productId).image,
+                imageAlt: productName,
+                imageHeight: 150,
+                html: `
+                    <p style="font-size:1.1em; line-height:1.5; color:#555; text-align:center;">
+                        প্রিয় গ্রাহক! <strong>${productName}</strong> (<strong>${productId}</strong>) 
+                        অর্ডার করতে নিচের অপশনগুলো ব্যবহার করুন:
+                    </p>
+                    <div class="buy-actions">
+                        <a href="${whatsappLink}" target="_blank" class="action-btn swal2-whatsapp-btn">
+                            <i class="fab fa-whatsapp"></i> CONTACT via WHATSAPP
+                        </a>
+                        <a href="${telegramLink}" target="_blank" class="action-btn swal2-telegram-btn">
+                            <i class="fab fa-telegram-plane"></i> CONTACT via TELEGRAM
+                        </a>
+                    </div>
+                `,
+                showCancelButton: true,
+                confirmButtonText: 'ORDER Confirmed', // Just a placeholder, as links are in HTML
+                confirmButtonColor: '#004d99', /* Primary Blue */
+                cancelButtonText: '<i class="fas fa-times-circle"></i> CANCEL',
+                cancelButtonColor: '#dc3545', 
+                showConfirmButton: false, /* Hide default confirm button */
+                showCloseButton: true,
+            });
+        }
+
+        // DETAILS পপ-আপ (SweetAlert2)
+        function openDetailsPopup(button) {
+            const productId = button.getAttribute('data-id');
+            const product = products.find(p => p.id === productId);
+
+            Swal.fire({
+                title: `${product.name} এর DETAILS`,
+                imageUrl: product.image,
+                imageAlt: product.name,
+                imageHeight: 150,
+                html: `
+                    <div class="details-content-area">
+                        <p>${product.details.replace(/\n/g, '<br>')}</p>
+                    </div>
+                `,
+                showCloseButton: true,
+                showConfirmButton: false, 
+            });
+        }
+
+        // FAVORITE টগল করার ফাংশন (SweetAlert2 Toast - স্ক্রিনের নিচে)
+        function toggleFavorite(button) {
+            const productId = button.getAttribute('data-id');
+            const productName = button.getAttribute('data-name');
+            const isFavorited = button.classList.toggle('favorited');
+            
+            let title = '';
+            let icon = '';
+
+            if (isFavorited) {
+                favorites[productId] = true;
+                title = `"${productName}" পছন্দ তালিকায় যুক্ত হয়েছে।`;
+                icon = 'success';
+            } else {
+                delete favorites[productId];
+                title = `"${productName}" পছন্দ তালিকা থেকে সরানো হয়েছে।`;
+                icon = 'error';
+            }
+            saveFavorites();
+
+            // ⭐ SweetAlert2 Toast নোটিফিকেশন: নিচে-মাঝখানে দেখানোর জন্য 'bottom' ব্যবহার করা হয়েছে ⭐
+            Swal.fire({
+                toast: true,
+                position: 'bottom', /* নিচে-মাঝখানে দেখানোর জন্য পরিবর্তন করা হয়েছে */
+                icon: icon,
+                title: title,
+                showConfirmButton: false,
+                timer: 2500, /* দ্রুত অদৃশ্য হওয়ার জন্য */
+                timerProgressBar: true,
+                customClass: {
+                    container: 'swal2-container',
+                    popup: 'swal2-toast'
+                }
+            });
+        }
+    </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>স্থির চিত্র সহ প্রিমিয়াম লোডিং স্ক্রিন</title>
+    <style>
+        /* 1. বেস স্টাইল */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9; /* হালকা ধূসর ব্যাকগ্রাউন্ড */
+            overflow: hidden; /* লোডিং এর সময় স্ক্রোলিং বন্ধ */
+        }
+
+        /* 2. লোডিং স্ক্রিন কন্টেইনার (Preloader) */
+        .custom-preloader-only {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #1a1a2e; /* গভীর নীল/বেগুনী ব্যাকগ্রাউন্ড - প্রিমিয়াম লুক */
+            display: flex;
+            flex-direction: column; /* ছবি এবং টেক্সটকে উল্লম্বভাবে সাজাতে */
+            justify-content: center;
+            align-items: center;
+            z-index: 9999; 
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 0.7s ease-in-out, visibility 0.7s ease-in-out; /* মসৃণ হাইড অ্যানিমেশন */
+        }
+
+        /* 3. লোডিং কন্টেইনার (ছবি এবং রিং এর জন্য) */
+        .loading-ring-container {
+            position: relative;
+            width: 150px; /* মোট সাইজ বৃদ্ধি */
+            height: 150px;
+            margin-bottom: 25px; /* নিচের টেক্সট থেকে দূরত্ব */
+        }
+
+        /* 4. লোডিং রিং (ঘুরবে - আধুনিক মাল্টি-কালার রিং) */
+        .loading-ring {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 8px solid rgba(255, 255, 255, 0.2); /* হালকা রিং */
+            border-top: 8px solid #00b894; /* টার্গেট কালার ১ (সবুজ) */
+            border-right: 8px solid #ff7675; /* টার্গেট কালার ২ (লাল) */
+            border-bottom: 8px solid #74b9ff; /* টার্গেট কালার ৩ (নীল) */
+            
+            animation: spin 1.8s cubic-bezier(0.5, 0.1, 0.5, 0.9) infinite; /* মসৃণ অ্যানিমেশন কার্ভ */
+            box-sizing: border-box;
+            filter: drop-shadow(0 0 5px rgba(0, 184, 148, 0.7)); /* রিং এ হালকা শ্যাডো */
+        }
+        
+        /* 5. স্থির ইমেজ স্টাইল (ছবি) */
+        .loading-image-only {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120px; /* রিং এর থেকে ছোট */
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3); /* আধুনিক শ্যাডো */
+            border: 4px solid #ffffff; /* সাদা বর্ডার */
+        }
+        
+        /* 6. লোডিং টেক্সট স্টাইল */
+        .loading-text {
+            color: #ffffff; /* সাদা টেক্সট */
+            font-size: 1.2rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-weight: bold;
+            opacity: 0.8;
+            /* টেক্সট এ পালসটিং অ্যানিমেশন */
+            animation: pulse 1.5s infinite alternate; 
+        }
+
+        /* 7. অ্যানিমেশন ফ্রেম */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.7; }
+            100% { transform: scale(1.05); opacity: 1; }
+        }
+
+        /* 8. লোডিং স্ক্রিন হাইড হওয়ার পর স্টাইল */
+        .custom-preloader-only.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        /* 9. প্রধান কন্টেন্ট স্টাইল */
+        .main-content {
+            padding: 50px;
+            text-align: center;
+            font-family: sans-serif;
+            opacity: 0;
+            transition: opacity 1s ease-in; /* মসৃণ এন্ট্রি */
+            min-height: 100vh; /* পুরো স্ক্রিন কভার */
+            background-color: #ffffff;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="preloader-only" class="custom-preloader-only">
+        <div class="loading-ring-container">
+            <div class="loading-ring"></div>
+            
+            <img src="https://i.postimg.cc/7LMVLxyc/images-1-10-imgupscaler-ai-v1-Fast-2K.jpg" 
+                 alt="Premium Loading Image" 
+                 class="loading-image-only">
+        </div>
+        
+        <div class="loading-text">
+            FF SERVICE LOADING.... 
+        </div>
+    </div>
+    
+
+    <script>
+        // জাভাস্ক্রিপ্ট কোড: লোডিং স্ক্রিন হাইড এবং কন্টেন্ট ডিসপ্লে
+        document.addEventListener("DOMContentLoaded", function() {
+            const preloader = document.getElementById('preloader-only');
+            const mainContent = document.querySelector('.main-content');
+            
+            // একটি ন্যূনতম সময় (যেমন 1.5s) সেট করা যাতে অ্যানিমেশন দেখা যায়
+            const minDisplayTime = 1500; 
+            
+            // সব রিসোর্স লোড হওয়ার সময়
+            window.addEventListener('load', function() {
+                // দুটি কাজ একই সাথে সম্পন্ন করার জন্য অপেক্ষা করা
+                setTimeout(function() {
+                    if (preloader) {
+                        preloader.classList.add('hidden'); // লোডার হাইড করা
+                    }
+                    
+                    if (mainContent) {
+                        mainContent.style.opacity = '1'; // কন্টেন্ট দৃশ্যমান করা
+                    }
+                }, minDisplayTime); 
+            });
+
+            // যদি 'load' ইভেন্টটি minDisplayTime এর আগে ফায়ার না হয়
+            setTimeout(function() {
+                if (!preloader.classList.contains('hidden')) {
+                    preloader.classList.add('hidden');
+                    if (mainContent) {
+                        mainContent.style.opacity = '1';
+                    }
+                }
+            }, 5000); // সর্বোচ্চ 5 সেকেন্ডের পর জোর করে হাইড করে দেওয়া
+        });
+    </script>
+</body>
+</html>
+
+<!-- Professional Live Chat - Start -->
+<style>
+/* Floating Chat Button */
+#proChatBtn {
+  position: fixed;
+  bottom: 18px;
+  right: 18px;
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, #0078ff, #00eaff);
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 100000;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.3s;
+}
+#proChatBtn img {
+  width: 28px;
+  height: 28px;
+}
+#proChatBtn:hover {
+  transform: scale(1.15);
+  box-shadow: 0 0 25px #00eaff;
+}
+
+/* Popup Box */
+#proChatBox {
+  position: fixed;
+  bottom: 75px;
+  right: 18px;
+  width: 260px;
+  max-width: 90vw;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  padding: 14px;
+  display: none;
+  z-index: 100000;
+  animation: proPopupAnim .3s ease-out;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Message Text */
+#proChatBox p {
+  text-align: center;
+  font-weight: 600;
+  font-size: 14px;
+  color: #111;
+  margin-bottom: 12px;
+}
+
+/* Buttons */
+.pro-contact-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  background: #0ea5e9;
+  color: #fff;
+  text-decoration: none;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  transition: 0.2s;
+}
+.pro-contact-btn img {
+  width: 22px;
+  height: 22px;
+}
+.pro-contact-btn:hover {
+  background: #0284c7;
+}
+
+/* Cancel Button */
+.pro-cancel-btn {
+  background: #ef4444;
+}
+.pro-cancel-btn:hover {
+  background: #dc2626;
+}
+
+/* Animation */
+@keyframes proPopupAnim {
+  from {opacity:0; transform: translateY(12px);}
+  to {opacity:1; transform: translateY(0);}
+}
+
+/* Mobile Responsive */
+@media (max-width: 400px) {
+  #proChatBox { width: 220px; right: 8px; }
+}
+</style>
+
+<!-- Floating Button -->
+<div id="proChatBtn">
+  <img src="https://i.postimg.cc/gJTyrsgw/chat.png" alt="Chat">
+</div>
+
+<!-- Popup Box -->
+<div id="proChatBox">
+  <p>Please contact us for any assistance.</p>
+
+  <a href="https://wa.me/message/3CECY4PPRT6TO1" target="_blank" class="pro-contact-btn">
+    <img src="https://i.postimg.cc/8CTmYjFn/whatsapp.png" alt=""> WhatsApp
+  </a>
+
+  <a href="https://t.me/Swygen_bd" target="_blank" class="pro-contact-btn">
+    <img src="https://i.postimg.cc/z3mnFBZL/telegram.png" alt=""> Telegram
+  </a>
+
+  <div class="pro-contact-btn pro-cancel-btn" onclick="closeProChat()">
+    <img src="https://i.postimg.cc/yY9543Nw/shield.png" alt=""> Close
+  </div>
+</div>
+
+<script>
+document.getElementById("proChatBtn").onclick = function() {
+  document.getElementById("proChatBox").style.display = "block";
+};
+function closeProChat() {
+  document.getElementById("proChatBox").style.display = "none";
+}
+</script>
+<!-- Professional Live Chat - End -->
+
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Professional Footer</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* CSS Variables (রং এবং স্পেসিং সহজে পরিবর্তনের জন্য) */
+        :root {
+            --footer-bg: #1c2833;      /* গাঢ় কালো/নীল */
+            --footer-text-color: #ecf0f1; /* হালকা সাদা/ধূসর */
+            --highlight-color: #3498db; /* প্রধান হাইলাইট রং */
+            --whatsapp-color: #25d366;
+            --telegram-color: #0088cc;
+            --border-color: #2c3e50;
+        }
+
+        /* --------------------------------------
+           সাধারণ বডি এবং ফুটার কনটেইনার
+           -------------------------------------- */
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: #f8f9fa; /* হালকা ব্যাকগ্রাউন্ড */
+        }
+        
+        /* ফুটারের মূল অংশ (অন্য কোডে প্রভাব ফেলবে না) */
+        #pro-ff-footer {
+            background-color: var(--footer-bg);
+            color: var(--footer-text-color);
+            padding: 40px 20px 10px; /* উপরে বেশি প্যাডিং */
+            width: 100%;
+            box-sizing: border-box;
+            margin-top: auto;
+            border-top: 5px solid var(--highlight-color); /* উপরে একটি রঙিন লাইন */
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* প্রধান শিরোনাম (FF SERVICE BD SERVER) */
+        .footer-branding {
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .footer-branding h3 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--highlight-color);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin: 0;
+        }
+
+        /* --------------------------------------
+           সোশ্যাল আইকন সেকশন (গ্লোয়িং এফেক্ট)
+           -------------------------------------- */
+        .social-icons-pro {
+            display: flex;
+            justify-content: center;
+            gap: 25px; /* আইকনগুলির মধ্যে স্পেস */
+            margin-bottom: 30px;
+        }
+
+        .social-icons-pro a {
+            color: var(--footer-text-color);
+            font-size: 2.5rem; /* আইকনগুলির বড় সাইজ */
+            text-decoration: none;
+            transition: all 0.4s ease-in-out;
+            border-radius: 50%; /* আইকনকে গোল করার জন্য */
+            padding: 5px;
+            line-height: 1;
+            /* গ্লোয়িং এফেক্টের জন্য প্রাথমিক শ্যাডো */
+            box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+        }
+
+        /* হোয়াটসঅ্যাপ স্টাইল */
+        .social-icons-pro a.whatsapp-icon:hover {
+            color: var(--whatsapp-color);
+            transform: scale(1.2);
+            /* গ্লোয়িং এফেক্ট */
+            text-shadow: 0 0 10px var(--whatsapp-color), 
+                         0 0 20px var(--whatsapp-color);
+        }
+
+        /* টেলিগ্রাম স্টাইল */
+        .social-icons-pro a.telegram-icon:hover {
+            color: var(--telegram-color);
+            transform: scale(1.2);
+            /* গ্লোয়িং এফেক্ট */
+            text-shadow: 0 0 10px var(--telegram-color), 
+                         0 0 20px var(--telegram-color);
+        }
+
+        /* --------------------------------------
+           কপিরাইট সেকশন
+           -------------------------------------- */
+        .footer-bottom {
+            width: 100%;
+            padding-top: 15px;
+            border-top: 1px solid var(--border-color); /* উপরে হালকা বর্ডার */
+            text-align: center;
+        }
+
+        .copyright-text {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.7); /* হালকা স্বচ্ছতা */
+            margin: 0;
+            padding-bottom: 10px;
+        }
+
+        .developer-info {
+            font-weight: 500;
+            color: var(--highlight-color);
+            text-decoration: none;
+        }
+        
+        /* --------------------------------------
+           মোবাইল রেসপনসিভ (Advanced Level)
+           -------------------------------------- */
+        @media (max-width: 768px) {
+            #pro-ff-footer {
+                padding: 30px 15px 10px;
+            }
+            
+            .footer-branding h3 {
+                font-size: 1.8rem;
+                letter-spacing: 1px;
+            }
+
+            .social-icons-pro {
+                gap: 20px;
+            }
+            
+            .social-icons-pro a {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <footer id="pro-ff-footer">
+        <div class="footer-container">
+            
+            <div class="footer-branding">
+                <h3>FF SERVICE BD SERVER</h3>
+            </div>
+            
+            <div class="social-icons-pro">
+                <a href="https://wa.me/01812774257" target="_blank" class="whatsapp-icon" aria-label="WhatsApp Link">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+                <a href="https://t.me/Swygen_bd" target="_blank" class="telegram-icon" aria-label="Telegram Link">
+                    <i class="fab fa-telegram-plane"></i>
+                </a>
+            </div>
+            
+            <div class="footer-bottom">
+                <p class="copyright-text">
+                    &copy; 2025 All Right reserve | 
+                    Developer By <a href="#" class="developer-info" target="_blank">Swygen IT</a>
+                </p>
+            </div>
+
+        </div>
+    </footer>
+    </body>
+</html>
+<style>
+/* **CSS - স্টাইল এবং রেসপনসিভনেস** অন্যান্য কোডের সাথে সংঘর্ষ এড়াতে সকল ক্লাসের নামের আগে "topupbuzz-" ব্যবহার করা হয়েছে।
+*/
+#topupbuzz-popup-overlay {
+    /* ওভারলে: পুরো স্ক্রিনকে আবৃত করে, ডিফল্টভাবে লুকানো থাকে */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.75); /* স্বচ্ছ কালো */
+    display: none; /* ডিফল্টভাবে লুকানো */
+    justify-content: center; /* কেন্দ্রে উল্লম্বভাবে */
+    align-items: center; /* কেন্দ্রে অনুভূমিকভাবে */
+    z-index: 9999; /* সর্বোচ্চ z-index, সবার উপরে রাখতে */
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+/* পপ-আপ যখন দৃশ্যমান হবে */
+#topupbuzz-popup-overlay.show-popup {
+    opacity: 1;
+    display: flex; /* ট্রানজিশনের জন্য রাখতে হচ্ছে, যদিও JS এ প্রথমে 'flex' করা হবে */
+}
+
+.topupbuzz-popup {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+    position: relative;
+    max-width: 90%;
+    width: 400px; /* ডেস্কটপের জন্য আদর্শ প্রস্থ */
+    overflow: hidden;
+    text-align: center;
+    transform: scale(0.8);
+    transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* স্মার্ট এন্ট্রি অ্যানিমেশন */
+}
+
+/* যখন পপ-আপ দেখানো হবে তখন স্কেল বাড়ানো */
+#topupbuzz-popup-overlay.show-popup .topupbuzz-popup {
+    transform: scale(1);
+}
+
+.topupbuzz-banner {
+    width: 100%;
+    height: auto;
+}
+
+.topupbuzz-banner-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+}
+
+.topupbuzz-content {
+    padding: 15px 20px;
+    color: #333333;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.topupbuzz-content strong {
+    color: #E74C3C; /* আকর্ষণীয় লাল রঙ */
+    font-size: 18px;
+    display: block;
+}
+
+.topupbuzz-action {
+    padding: 0 20px 20px 20px;
+}
+
+.topupbuzz-button {
+    display: block;
+    padding: 12px 20px;
+    background-color: #3498DB; /* উজ্জ্বল নীল বাটন */
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: 700;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.topupbuzz-button:hover {
+    background-color: #2980B9;
+    transform: translateY(-2px);
+}
+
+.topupbuzz-close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 30px;
+    font-weight: 200;
+    color: #ffffff; /* ইমেজের উপর সাদা রঙ */
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    line-height: 1;
+    z-index: 10000;
+    transition: color 0.2s;
+}
+
+.topupbuzz-close-btn:hover {
+    color: #f1f1f1;
+}
+
+/* মোবাইল রেসপনসিভনেস */
+@media (max-width: 500px) {
+    .topupbuzz-popup {
+        width: 95%;
+    }
+    .topupbuzz-content strong {
+        font-size: 16px;
+    }
+    .topupbuzz-button {
+        font-size: 16px;
+        padding: 10px 15px;
+    }
+    .topupbuzz-close-btn {
+        font-size: 24px; /* ছোট স্ক্রিনে ক্রস আইকন ছোট */
+        right: 10px;
+    }
+}
+</style>
+
+<div id="topupbuzz-popup-overlay">
+    <div class="topupbuzz-popup">
+        <span class="topupbuzz-close-btn">&times;</span> <div class="topupbuzz-banner">
+            <img src="https://i.postimg.cc/wMs05ZPd/Picsart-25-10-26-11-34-53-720.jpg" alt="TOPUPBUZZ BD Banner" class="topupbuzz-banner-img">
+        </div>
+
+        <div class="topupbuzz-content">
+            <p><strong>কম দামে Top Up করুন TOPUPBUZZ BD থেকে 100% SAFE এবং FAST DELIVERY এবং সর্বনিম্ন দামে !</strong></p>
+        </div>
+
+        <div class="topupbuzz-action">
+            <a href="https://topup-buzz.gamer.gd/" target="_blank" class="topupbuzz-button">TOP UP NOW</a>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', (event) => {
+    const popupOverlay = document.getElementById('topupbuzz-popup-overlay');
+    const closeButton = document.querySelector('.topupbuzz-close-btn');
+
+    // পপ-আপ দেখানোর ফাংশন
+    function showPopup() {
+        // প্রথমে display:flex করা হচ্ছে যাতে ট্রানজিশন কাজ করে
+        popupOverlay.style.display = 'flex'; 
+        // ট্রানজিশনের জন্য সামান্য বিলম্ব করে ক্লাস যোগ করা
+        setTimeout(() => {
+            popupOverlay.classList.add('show-popup');
+        }, 50); 
+    }
+
+    // পপ-আপ বন্ধ করার ফাংশন
+    function closePopup() {
+        // ক্লাস সরিয়ে ট্রানজিশন শুরু
+        popupOverlay.classList.remove('show-popup'); 
+        // ট্রানজিশন শেষ হওয়ার পর সম্পূর্ণ লুকিয়ে ফেলা
+        setTimeout(() => {
+            popupOverlay.style.display = 'none';
+        }, 400); // CSS-এ ট্রানজিশনের সময়ের সাথে সামঞ্জস্য রেখে
+    }
+
+    // ⭐ ৫ সেকেন্ড (5000 মিলিসেকেন্ড) পর পপ-আপ দেখানো
+    setTimeout(showPopup, 7000);
+
+    // ক্রস আইকনে ক্লিক করলে পপ-আপ বন্ধ করা
+    closeButton.addEventListener('click', closePopup);
+
+    // পপ-আপ এর বাইরে ক্লিক করলে বন্ধ করা
+    popupOverlay.addEventListener('click', (e) => {
+        if (e.target === popupOverlay) {
+            closePopup();
+        }
+    });
+
+    // Esc কী চাপলে বন্ধ করা
+    document.addEventListener('keydown', (e) => {
+        if (e.key === "Escape" && popupOverlay.classList.contains('show-popup')) {
+            closePopup();
+        }
+    });
+});
+</script>
+
