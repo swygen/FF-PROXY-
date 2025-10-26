@@ -90,7 +90,7 @@
         .store-name {
             font-size: 1.8em; /* ফন্টের আকার বৃদ্ধি */
             font-weight: 700; /* গাঢ় ফন্ট */
-            color: #0056b3; /* গভীর নীল */
+            color: #000000; /* গভীর নীল */
             letter-spacing: 0.5px; /* অক্ষরের মধ্যে ব্যবধান */
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
         }
@@ -262,244 +262,236 @@
 
 </body>
 </html>
+<br>
+<br>
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>SWYGEN HIGH-END Services</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <style>
-        /* CSS ভেরিয়েবলস: উন্নত রঙের প্যালেট */
-        :root {
-            --primary-color: #004d99; /* Deep Professional Blue */
-            --primary-light: #007bff;
-            --success-color: #00c853; /* Bright Green */
-            --telegram-color: #0088cc; /* Telegram Blue */
-            --danger-color: #ff3d00; /* Bright Red */
-            --warning-color: #ffb300;
-            --bg-color: #f0f4f8; /* Soft White/Light Grey */
-            --card-bg: #ffffff;
-            --text-color: #263238;
-            --shadow-subtle: 0 4px 10px rgba(0, 0, 0, 0.05);
-            --shadow-deep: 0 10px 20px rgba(0, 0, 0, 0.15);
-        }
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+  <title>SWYGEN - Pro Mobile Order</title>
 
-        /* বেস স্টাইল এবং রিসেট */
-        body {
-            font-family: 'Poppins', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            box-sizing: border-box;
-            line-height: 1.6;
-            min-height: 100vh;
-            touch-action: pan-y;
-            overflow-x: hidden;
-        }
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
 
-        .container {
-            width: 90%;
-            max-width: 650px; 
-            margin: 0 auto;
-            padding: 15px; 
-        }
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
 
-        /* হেডার স্টাইল */
-        .header {
-            text-align: center;
-            padding: 5px 0;
-            background: linear-gradient(90deg, var(--primary-color), var(--primary-light));
-            color: white;
-            margin-bottom: 15px;
-            border-radius: 12px;
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
-            position: sticky;
-            top: 0;
-            z-index: 50;
-        }
+  <style>
+    /* -------------------------------------
+    1. Base & Utilities (Mobile First) 
+    ------------------------------------- */
+    :root{
+      --bg:#f8f9fa; /* Light background */
+      --card:#ffffff;
+      --accent:#007bff; /* Primary Blue */
+      --accent-2:#0056b3; /* Darker Blue for hover */
+      --success:#28a745; /* Green */
+      --muted:#6c757d;
+      --danger:#dc3545;
+      --radius:12px;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      --font:'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+    }
+    *{box-sizing:border-box; -webkit-tap-highlight-color: transparent;}
+    body{margin:0;font-family:var(--font);background:var(--bg);color:#343a40;line-height:1.5; padding-bottom: 50px;}
+    
+    /* Main App Wrapper - Flexible width for all devices */
+    .wrap{max-width:768px;margin:0 auto;padding:0;} 
+    
+    /* Header - Professional Look */
+    header{
+        background:linear-gradient(135deg, var(--accent), var(--accent-2));
+        padding:20px 15px;
+        color:#fff;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        position: sticky; /* Stays at top on mobile scroll */
+        top: 0;
+        z-index: 100;
+    }
+    header h1, header h2{margin:0;font-size:22px;display:flex;align-items:center;gap:10px;font-weight: 700; flex-grow: 1;}
+    header button{
+        background: rgba(255, 255, 255, 0.2);
+        color: #fff;
+        border: none;
+        padding: 8px 12px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background 0.2s;
+        margin-right: 10px;
+    }
 
-        .header h1 {
-            margin: 0;
-            font-size: 2em;
-            letter-spacing: 1px;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
-        }
+    /* -------------------------------------
+    2. Product List & Cards (Responsive)
+    ------------------------------------- */
+    #app-content {padding: 0 15px;}
+    #product-list{display:grid;gap:15px; grid-template-columns: 1fr;} /* Default: 1 column for mobile */
+    @media (min-width:576px){
+        #product-list{grid-template-columns: repeat(2, 1fr); gap: 20px;} /* 2 columns for tablet/desktop */
+    }
+    
+    .card{ background:var(--card); border-radius:var(--radius); overflow: hidden; box-shadow: var(--shadow); transition: transform 0.3s ease; border: 1px solid #e9ecef; }
+    .product-thumb{ width: 100%; height: 150px; object-fit: cover; }
+    .product-content{ padding: 15px; }
+    .pname{font-weight:700;color:var(--accent);font-size:18px; margin-bottom: 5px;}
+    .price{font-weight:900;color:var(--success);font-size:22px; margin-top: 8px;}
+    .actions{ display:flex; gap:10px; margin-top:15px; padding-top: 15px; border-top: 1px dashed #e9ecef; }
+    
+    button.btn{ 
+        flex:1; 
+        padding:12px; 
+        border-radius:8px; 
+        border:0; 
+        font-weight:600; 
+        cursor:pointer; 
+        transition: background 0.2s, transform 0.1s; 
+        font-size: 15px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .btn-buy{background:var(--success);color:#fff}
+    .btn-details{background:var(--accent);color:#fff}
 
-        /* প্রোডাক্ট কার্ড স্টাইল */
-        .product-card {
-            background-color: var(--card-bg);
-            border-radius: 10px;
-            box-shadow: var(--shadow-subtle);
-            margin-bottom: 20px;
-            overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s;
-            border: 2px solid transparent; 
-        }
+    /* -------------------------------------
+    3. Order Form Styles (Adaptive)
+    ------------------------------------- */
+    .form-container{
+        background: var(--card);
+        padding: 20px;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        border: 1px solid #e9ecef;
+    }
+    
+    input[type="text"], input[type="tel"], select {
+        width:100%;
+        padding:14px;
+        border-radius:8px;
+        border:1px solid #ced4da;
+        font-size:16px;
+        margin-bottom:15px;
+        transition: border-color 0.3s;
+    }
+    input:focus, select:focus {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+    label{font-weight:700;font-size:15px;margin-bottom:8px;display:block;color:#343a40}
 
-        .product-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-deep);
-            border-color: var(--primary-light);
-        }
+    /* Payment Info Section */
+    #paymentInfo {
+        margin-top: 20px;
+        padding: 15px;
+        border-radius: var(--radius);
+        background: #fff3cd; 
+        border: 1px solid #ffeeba;
+    }
+    .send-amount {
+        font-weight: 800;
+        color: var(--danger);
+        font-size: 24px;
+        margin: 10px 0;
+        text-align: center;
+        padding: 8px;
+        border: 3px dashed var(--danger);
+        border-radius: 6px;
+        background: #fff;
+    }
+    .account-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+        padding: 10px;
+        background: #f8f9fa;
+        border-radius: 6px;
+    }
+    .account-row strong { font-size: 15px; }
+    .copy-btn {
+        padding: 8px 12px;
+        background: var(--accent);
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        font-size: 14px;
+        font-weight: 700;
+    }
 
-        .product-image-container {
-            position: relative;
-            width: 100%;
-            padding-top: 56.25%; 
-            overflow: hidden;
-        }
+    /* Submit Button */
+    .btn-submit {
+        width: 100%;
+        padding: 15px;
+        background: var(--success);
+        color: #fff;
+        font-size: 17px;
+        font-weight: 700;
+        border: none;
+        border-radius: 10px;
+        margin-top: 20px;
+        cursor: pointer;
+    }
 
-        .product-image {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+    /* -------------------------------------
+    4. Receipt Styles 
+    ------------------------------------- */
+    #receipt-to-download {
+        padding: 20px;
+        border: 2px solid var(--success);
+        border-radius: 10px;
+    }
+    .receipt-info div {
+        margin-bottom: 5px;
+    }
+    .receipt-info strong {
+        color: var(--accent);
+    }
 
-        .product-info {
-            padding: 18px 20px 10px;
-        }
-
-        .product-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 8px;
-        }
-
-        .product-name {
-            font-size: 1.5em;
-            font-weight: 700;
-            color: var(--primary-color);
-        }
-
-        .product-id {
-            font-size: 0.9em;
-            color: #78909c;
-            font-weight: 500;
-        }
-
-        .product-stats {
-            font-size: 1em;
-            color: var(--success-color);
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-        }
-
-        .product-actions {
-            display: flex;
-            gap: 8px;
-            padding: 15px 20px;
-            border-top: 1px solid #eceff1;
-        }
-
-        .action-btn {
-            flex: 1;
-            padding: 12px 5px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.95em;
-            font-weight: 600;
-            transition: all 0.2s ease;
-            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
-            white-space: nowrap;
-        }
-
-        .buy-btn {
-            background: linear-gradient(45deg, var(--success-color), #00a142);
-            color: white;
-        }
-        .buy-btn:active {
-            transform: scale(0.98);
-        }
-
-        .details-btn {
-            background-color: var(--warning-color);
-            color: var(--text-color);
-        }
-        .details-btn:active {
-            transform: scale(0.98);
-        }
-
-        .favorite-btn {
-            background-color: #90a4ae;
-            color: white;
-        }
-        .favorite-btn.favorited {
-            background: linear-gradient(45deg, var(--danger-color), #cc0000);
-        }
-        .favorite-btn:active {
-            transform: scale(0.98);
-        }
-
-        /* SweetAlert2 কাস্টম স্টাইল (Buy পপ-আপের ভিতরের বাটনগুলো) */
-        .buy-actions {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-top: 15px;
-        }
-        
-        /* ⭐ BUY অপশনে বাটনগুলোর নিচের আন্ডারলাইন সরানো হয়েছে ⭐ */
-        .buy-actions a {
-            text-decoration: none; 
-        }
-
-        .swal2-whatsapp-btn {
-            background-color: #25D366 !important;
-            color: white !important;
-        }
-
-        .swal2-telegram-btn {
-            background-color: var(--telegram-color) !important;
-            color: white !important;
-        }
-        
-        .swal2-cancel-btn {
-            background-color: var(--danger-color) !important;
-            color: white !important;
-        }
-
-        /* Toast নোটিফিকেশন: ছোট, নিচে এবং দ্রুত */
-        .swal2-toast {
-            max-width: 90% !important;
-            min-width: 250px;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
-            border-radius: 8px;
-            padding: 30px;
-        }
-        .swal2-toast .swal2-title {
-            font-size: 1em !important;
-            font-weight: 500 !important;
-            margin: 0 !important;
-        }
-    </style>
+    footer.small{font-size:12px;color:var(--muted);text-align:center;padding:15px;}
+  </style>
 </head>
 <body>
+  <div class="wrap">
+    <header id="main-header">
+      </header>
 
-    <div class="container">
-        <div class="header">
-            <h1><i class="fas fa-user-secret"></i> SWYGEN ALL SERVICE LIST</h1>
+    <div id="app-content">
         </div>
 
-        <div id="product-list">
-            </div>
-    </div>
+    <footer class="small">© SWYGEN — অর্ডার শেষে অবশ্যই রসিদ ডাউনলোড করে রাখুন।</footer>
+  </div>
 
-    <script>
-        // প্রোডাক্ট ডেটা
-        const products = [
+  <script>
+    // --------------------------
+    // FIREBASE CONFIGURATION (unchanged)
+    // --------------------------
+    const firebaseConfig = {
+      apiKey: "AIzaSyAkq72LXPDcLpy0yI-GEsUSARv4Wf_1rL8",
+      authDomain: "ffff-e615f.firebaseapp.com",
+      projectId: "ffff-e615f",
+      storageBucket: "ffff-e615f.firebasestorage.app",
+      messagingSenderId: "376119375913",
+      appId: "1:376119375913:web:0162f88eaf69e20e7a0438",
+      measurementId: "G-E98Q8XYN2W"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    // --------------------------
+    // GLOBAL DATA
+    // --------------------------
+    const appContent = document.getElementById('app-content');
+    
+    const products = [
             {
                 id: "SWY-001",
                 name: "Proxy Server [OB50]",
                 price: "৳ 250",
+               displayPrice:"৳ 250",
                 views: "1.5K",
                 image: "https://i.postimg.cc/wxRxN316/Picsart-25-10-26-08-03-28-892-imgupscaler-ai-General-8K.jpg",
                 details: "আমাদের Proxy Server [OB50]  আপনার FREE FIRE গেম কে আরো রোমাঞ্চকর করে তুলবে! <b> মাত্র ২৫০ টাকায়</b> **100% BUG FIX ** সকল ANDROID ফোন এ সাপোর্ট করবে ।\n\n**ফিচার্স:**\n- সকল কালেকশন - OLD কালেকশন ও SESSION - 1 থেকে সকল কালেকশন\n- UNLIMITED DIAMOND 💎\n- V BADGE \n- GMAIL / FACEBOOK  দিয়ে লগইন\n- ",
@@ -508,6 +500,7 @@
                 id: "SWY-002",
                 name: "ANTI BAN MOBILE PANEL [OB50]",
                 price: "৳ 1250",
+               displayPrice:"৳ 1250",
                 views: "1.4K",
                 image: "https://i.postimg.cc/d3hhk9zt/Picsart-25-10-26-08-16-53-995-imgupscaler-ai-General-8K.jpg",
                 details: "আমাদের ANTI BAN MOBILE PANEL [OB50] আপনার FREE FIRE গেম কে আরো রোমাঞ্চকর ও PRO  করে তুলবে!<b> মাত্র ১২৫০ টাকায় </b>**100% BUG FIX ** সকল ANDROID ফোন এ সাপোর্ট করবে ।\n\n**ফিচার্স:**\n-  ১০০% সেইফ Antiban Panel \n- মেইন আইডি তে লাগাতে পারবেন \n- কেউ বুঝতে পারবে না ( HIDE HACK ) \n- সকল প্রকার TOURNAMENT খেলতে পারবেন কোন ঝামেলা ছাড়াই \n-  ১৫ দিন পর্যন্ত ঝামেলা ছাড়াই খেলতে পারবেন  \n- ",
@@ -516,6 +509,7 @@
                 id: "SWY-003",
                 name: "FF MOBILE HACK [OB50]",
                 price: "৳ 550",
+                displayPrice:"৳ 550",
                 views: "2.1K",
                 image: "https://i.postimg.cc/qRjmMkdD/Picsart-25-10-26-08-29-53-225-imgupscaler-ai-General-8K.jpg",
                 details: "আমাদের FF MOBILE HACK [OB50] আপনার FREE FIRE গেম কে আরো রোমাঞ্চকর  করে তুলবে! <b>মাত্র ৫৫০ টাকায় </b>**100% BUG FIX ** সকল ANDROID ফোন এ সাপোর্ট করবে ।\n\n**ফিচার্স:**\n-  ১০০% Working হ্যাক\n- সব ম্যাপ খেলতে পারবেন\n- BR/CS - সহ সবকিছু খেলতে পারবেন \n- AUTO HADE SHOT , FLY KILL , WALL HACK , AWM HACK \n-  সব GUN দিয়ে  Headshot  হবে \n-  TEAMMATES দের আইডি তে কোন সমস্যা হবে না \n ",
@@ -524,6 +518,7 @@
                 id: "SWY-004",
                 name: "FF MOBILE INJECTOR [OB50]",
                 price: "৳ 750",
+               displayPrice:"৳ 750",
                 views: "1.2K",
                 image: "https://i.postimg.cc/BZN6sRPB/Picsart-25-10-26-08-44-24-815-imgupscaler-ai-General-8K.jpg",
                 details: "আমাদের FF MOBILE INJECTOR [OB50] আপনার FREE FIRE গেম কে আরো রোমাঞ্চকর ও PRO  করে তুলবে! <b>মাত্র ৭৫০ টাকায় </b>**100% BUG FIX ** সকল ANDROID ফোন এ সাপোর্ট করবে ।\n\n**ফিচার্স:**\n-  ১০০% Working ইনজেক্টর PANEL \n- মেইন আইডি তে লাগতে পারবেন\n- ANTIBAN  প্রটেকশন ( আইডির কোন সমস্যা হবে না ) \n- সব GUN দিয়ে AIM LOCK হবে \n-  সব GUN দিয়ে  Headshot  হবে \n-  সকল প্রকার ঝামেলা ছাড়াই ৩ দিন খেলতে পারবেন\n ",
@@ -532,168 +527,318 @@
                 id: "SWY-005",
                 name: "FF MAIN ID GLITCH",
                 price: "৳ 450",
+                displayPrice:"৳ 450",
                 views: "1.9K",
                 image: "https://i.postimg.cc/yxnXyndB/1761447198343.jpg",
                 details: "আমাদের FF MAIN ID GLITCH [OB50]  আপনার FREE FIRE গেম  আইডি কে আরো রোমাঞ্চকর ও PRO  করে তুলবে! <b>মাত্র ৪৫০ টাকায় </b>**100% BUG FIX ** সকল ANDROID ফোন এ সাপোর্ট করবে ।\n\n**ফিচার্স:**\n-  ১০০% Working GLITCH ফাইল \n- মেইন আইডি তে লাগতে পারবেন\n- ANTIBAN  প্রটেকশন ( আইডির কোন সমস্যা হবে না ) \n- সব GUN SKIN/DRESS UP SKIN / PET SKIN / সব নিতে পারবেন\n-  SESSION - 1 থেকে এখান পর্যন্ত আসা সকল কালেকশন নিতে পারবেন \n-  ঝামেলা ছাড়াই Set Up করুন একদম সহজে\n ",
             }
-        ];
+  ];
 
-        const productList = document.getElementById('product-list');
-        const WHATSAPP_BASE_URL = "https://wa.me/message/3CECY4PPRT6TO1";
-        const TELEGRAM_USERNAME = "Swygen_bd";
+    const paymentAccounts = {
+        'bKash': { number: '01775716460', icon: 'fa-solid fa-mobile-screen' },
+        'Nagad': { number: '01855966005', icon: 'fa-solid fa-money-check-dollar' },
+        'Rocket': { number: '01829261192', icon: 'fa-solid fa-sack-dollar' }
+    };
 
-        // লোকাল স্টোরেজ ম্যানেজমেন্ট
-        const loadFavorites = () => {
-            try {
-                const favorites = localStorage.getItem('swygen_favorites');
-                return favorites ? JSON.parse(favorites) : {};
-            } catch (e) {
-                return {};
-            }
-        };
+    // --------------------------
+    // CORE FUNCTIONS
+    // --------------------------
 
-        let favorites = loadFavorites();
+    // Function to render the main product list page
+    function renderProductList() {
+        document.getElementById('main-header').innerHTML = '<h1><i class="fa-solid fa-square-poll-vertical fa-beat-fade"></i> SWYGEN PREMIUM SERVICE LIST</h1>';
+        window.scrollTo(0, 0); // Scroll to top
 
-        const saveFavorites = () => {
-            try {
-                localStorage.setItem('swygen_favorites', JSON.stringify(favorites));
-            } catch (e) {
-                // Do nothing
-            }
-        };
-
-        // সব প্রোডাক্ট কার্ড তৈরি করা
-        products.forEach(product => {
-            const isFavorited = favorites[product.id];
-            const card = document.createElement('div');
-            card.className = 'product-card';
-            card.innerHTML = `
-                <div class="product-image-container">
-                    <img src="${product.image}" alt="${product.name}" class="product-image">
-                </div>
-                <div class="product-info">
-                    <div class="product-header">
-                        <div class="product-name">${product.name}</div>
-                        <div class="product-stats">
-                            <i class="fas fa-eye"></i> ${product.views}
+        let productHTML = '<div id="product-list">';
+        products.forEach(p => {
+            productHTML += `
+                <div class="card">
+                    <img class="product-thumb" src="${p.image}" alt="${p.name}">
+                    <div class="product-content">
+                        <div class="pname">${p.name}</div>
+                        <div class="pid"><i class="fa-solid fa-fingerprint"></i> ID: ${p.id}</div>
+                        <div class="price">${p.displayPrice}</div>
+                        <div class="actions">
+                            <button class="btn btn-buy" data-id="${p.id}" data-action="buy"><i class="fa-solid fa-cart-shopping"></i> Buy Now</button>
+                            <button class="btn btn-details" data-id="${p.id}" data-action="details"><i class="fa-solid fa-circle-info"></i> Details</button>
                         </div>
                     </div>
-                    <div class="product-id">ID: ${product.id}</div>
-                </div>
-                <div class="product-actions">
-                    <button class="action-btn buy-btn" data-id="${product.id}" data-name="${product.name}" data-price="${product.price}" onclick="openBuyPopup(this)">
-                        <i class="fas fa-shopping-cart"></i> BUY (${product.price})
-                    </button>
-                    <button class="action-btn details-btn" data-id="${product.id}" onclick="openDetailsPopup(this)">
-                        <i class="fas fa-info-circle"></i> DETAILS
-                    </button>
-                    <button class="action-btn favorite-btn ${isFavorited ? 'favorited' : ''}" data-id="${product.id}" data-name="${product.name}" onclick="toggleFavorite(this)">
-                        <i class="fas fa-heart"></i> FAVORITE
-                    </button>
                 </div>
             `;
-            productList.appendChild(card);
         });
+        productHTML += '</div>';
+        appContent.innerHTML = productHTML;
 
-        // BUY পপ-আপ (SweetAlert2) - WhatsApp এবং Telegram সহ
-        function openBuyPopup(button) {
-            const productId = button.getAttribute('data-id');
-            const productName = button.getAttribute('data-name');
-            const productPrice = button.getAttribute('data-price');
-            
-            const whatsappMessage = encodeURIComponent(`Hi Developer SWYGEN! I would like to order this ${productName} (${productId}) service. Price: ${productPrice}`);
-            const whatsappLink = `${WHATSAPP_BASE_URL}?text=${whatsappMessage}`;
-            
-            // Telegram মেসেজ লিঙ্ক (যদি টেলিগ্রাম অ্যাপ থাকে তবে কাজ করবে)
-            const telegramLink = `https://t.me/${TELEGRAM_USERNAME}`;
+        // Re-attach event listeners after rendering
+        document.getElementById('product-list').addEventListener('click', handleProductActions);
+    }
+    
+    // Function to handle Buy/Details clicks
+    function handleProductActions(e) {
+        const btn = e.target.closest('button');
+        if (!btn) return;
+        const productId = btn.dataset.id;
+        const product = products.find(p => p.id === productId);
 
+        if (btn.dataset.action === 'buy') {
+            renderOrderForm(product);
+        } else if (btn.dataset.action === 'details') {
+            // Use SweetAlert for details pop-up
             Swal.fire({
-                title: 'BUY TO CONTACT SWYGEN',
-                imageUrl: products.find(p => p.id === productId).image,
-                imageAlt: productName,
-                imageHeight: 150,
-                html: `
-                    <p style="font-size:1.1em; line-height:1.5; color:#555; text-align:center;">
-                        প্রিয় গ্রাহক! <strong>${productName}</strong> (<strong>${productId}</strong>) 
-                        অর্ডার করতে নিচের অপশনগুলো ব্যবহার করুন:
-                    </p>
-                    <div class="buy-actions">
-                        <a href="${whatsappLink}" target="_blank" class="action-btn swal2-whatsapp-btn">
-                            <i class="fab fa-whatsapp"></i> CONTACT via WHATSAPP
-                        </a>
-                        <a href="${telegramLink}" target="_blank" class="action-btn swal2-telegram-btn">
-                            <i class="fab fa-telegram-plane"></i> CONTACT via TELEGRAM
-                        </a>
-                    </div>
-                `,
-                showCancelButton: true,
-                confirmButtonText: 'ORDER Confirmed', // Just a placeholder, as links are in HTML
-                confirmButtonColor: '#004d99', /* Primary Blue */
-                cancelButtonText: '<i class="fas fa-times-circle"></i> CANCEL',
-                cancelButtonColor: '#dc3545', 
-                showConfirmButton: false, /* Hide default confirm button */
-                showCloseButton: true,
+                title:`<i class="fa-solid fa-magnifying-glass"></i> ${product.name}`, 
+                html:`
+                    <img src="${product.image}" style="width:100%;height:auto;border-radius:8px;margin-bottom:15px; box-shadow: var(--shadow);">
+                    <p style="text-align:justify; font-size:15px; color:#555; line-height:1.6; padding:0 10px;">${product.details}</p>
+                    <div style="font-weight:700; font-size:24px; color:var(--success); margin-top:15px; border-top: 1px solid #eee; padding-top: 10px;">Price: ${product.displayPrice}</div>
+                `, 
+                width:600,
+                showConfirmButton: true,
+                confirmButtonText: 'Close'
             });
         }
+    }
 
-        // DETAILS পপ-আপ (SweetAlert2)
-        function openDetailsPopup(button) {
-            const productId = button.getAttribute('data-id');
-            const product = products.find(p => p.id === productId);
+    // Function to render the new order form page
+    function renderOrderForm(product) {
+        document.getElementById('main-header').innerHTML = `
+            <button onclick="renderProductList()"><i class="fa-solid fa-arrow-left"></i></button>
+            <h2><i class="fa-solid fa-file-invoice-dollar"></i> Confirm Order</h2>
+        `;
+        window.scrollTo(0, 0); // Scroll to top
 
-            Swal.fire({
-                title: `${product.name} এর DETAILS`,
-                imageUrl: product.image,
-                imageAlt: product.name,
-                imageHeight: 150,
-                html: `
-                    <div class="details-content-area">
-                        <p>${product.details.replace(/\n/g, '<br>')}</p>
+        const formHTML = `
+            <div class="form-container">
+                <h3 style="color:var(--accent); font-size:18px; margin-top:0; border-bottom:1px solid #eee; padding-bottom:10px;">${product.name}</h3>
+                <form id="orderForm">
+                    <label>Price</label>
+                    <input type="text" value="${product.displayPrice}" readonly style="color:var(--success); font-weight:700; font-size: 18px; margin-bottom: 20px;">
+                    
+                    <label><i class="fa-solid fa-user-tag"></i> Full Name</label>
+                    <input type="text" id="ord_name" placeholder="আপনার নাম" required>
+                    
+                    <label><i class="fa-brands fa-whatsapp"></i> WhatsApp Number</label>
+                    <input type="tel" id="ord_whatsapp" placeholder="+8801XXXXXXXXX" pattern="[0-9]{11,14}" required>
+                    
+                    <label><i class="fa-solid fa-credit-card"></i> Payment Method</label>
+                    <select id="ord_payment">
+                        <option value="Cash on Delivery">Cash on Delivery</option>
+                        <option value="bKash">bKash</option>
+                        <option value="Nagad">Nagad</option>
+                        <option value="Rocket">Rocket</option>
+                    </select>
+
+                    <div id="paymentInfo" style="display:none;">
+                        <p style="color:var(--danger); font-weight:700; font-size:16px;"><i class="fa-solid fa-triangle-exclamation"></i> গুরুত্বপূর্ণ: অর্ডার নিশ্চিত করতে নিচে দেওয়া নম্বরে **সেন্ড মানি** করুন।</p>
+                        
+                        <label style="color:var(--danger); font-size:18px;">মোট পরিশোধের পরিমাণ:</label>
+                        <div class="send-amount"><i class="fa-solid fa-sack-dollar"></i> ${product.displayPrice}</div>
+
+                        <div id="accountDetails"></div>
+                        
+                        <label for="ord_txnid" style="margin-top:15px;"><i class="fa-solid fa-receipt"></i> ট্রানজ্যাকশন আইডি (Transaction ID) জমা দিন:</label>
+                        <input type="text" id="ord_txnid" placeholder="আপনার ট্রানজ্যাকশন আইডি">
                     </div>
-                `,
-                showCloseButton: true,
-                showConfirmButton: false, 
-            });
-        }
 
-        // FAVORITE টগল করার ফাংশন (SweetAlert2 Toast - স্ক্রিনের নিচে)
-        function toggleFavorite(button) {
-            const productId = button.getAttribute('data-id');
-            const productName = button.getAttribute('data-name');
-            const isFavorited = button.classList.toggle('favorited');
+                    <label><i class="fa-solid fa-note-sticky"></i> Notes (Optional)</label>
+                    <input type="text" id="ord_notes" placeholder="নোট (যদি থাকে)">
+                    
+                    <input type="hidden" id="ord_pid" value="${product.id}">
+
+                    <button type="submit" class="btn-submit"><i class="fa-solid fa-check-circle"></i> Submit Order</button>
+                </form>
+            </div>
+        `;
+        appContent.innerHTML = formHTML;
+
+        // Attach event listeners for dynamic form elements
+        const paymentSelect = document.getElementById('ord_payment');
+        paymentSelect.addEventListener('change', () => updatePaymentInfo(product));
+        updatePaymentInfo(product); // Initial load
+
+        document.getElementById('orderForm').addEventListener('submit', (e) => handleFormSubmit(e, product));
+    }
+    
+    // Function to dynamically update payment details
+    function updatePaymentInfo(product) {
+        const paymentSelect = document.getElementById('ord_payment');
+        const paymentInfoDiv = document.getElementById('paymentInfo');
+        const accountDetailsDiv = document.getElementById('accountDetails');
+        const txnidInput = document.getElementById('ord_txnid');
+        const method = paymentSelect.value;
+
+        if (method === 'Cash on Delivery') {
+            paymentInfoDiv.style.display = 'none';
+            txnidInput.removeAttribute('required');
+        } else {
+            paymentInfoDiv.style.display = 'block';
+            txnidInput.setAttribute('required', 'required');
             
-            let title = '';
-            let icon = '';
+            const account = paymentAccounts[method];
+            
+            accountDetailsDiv.innerHTML = `
+                <p style="font-weight: 700; color: var(--accent); margin-top: 10px;">নির্বাচিত অ্যাকাউন্ট: ${method}</p>
+                <div class="account-row">
+                    <strong style="color:#000;"><i class="${account.icon}"></i> A/C Number:</strong> 
+                    <strong>${account.number}</strong>
+                    <button type="button" id="copyBtn-${method}" class="copy-btn" onclick="copyToClipboard('${account.number}', 'copyBtn-${method}')"><i class="fa-solid fa-copy"></i> Copy</button>
+                </div>
+            `;
+        }
+    }
 
-            if (isFavorited) {
-                favorites[productId] = true;
-                title = `"${productName}" পছন্দ তালিকায় যুক্ত হয়েছে।`;
-                icon = 'success';
-            } else {
-                delete favorites[productId];
-                title = `"${productName}" পছন্দ তালিকা থেকে সরানো হয়েছে।`;
-                icon = 'error';
-            }
-            saveFavorites();
+    // Function for reliable copying (Globalized for access from HTML)
+    window.copyToClipboard = function(text, elementId) {
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        textarea.style.position = 'fixed'; 
+        textarea.style.opacity = 0;
+        document.body.appendChild(textarea);
+        
+        textarea.focus();
+        textarea.select();
 
-            // ⭐ SweetAlert2 Toast নোটিফিকেশন: নিচে-মাঝখানে দেখানোর জন্য 'bottom' ব্যবহার করা হয়েছে ⭐
-            Swal.fire({
-                toast: true,
-                position: 'bottom', /* নিচে-মাঝখানে দেখানোর জন্য পরিবর্তন করা হয়েছে */
-                icon: icon,
-                title: title,
-                showConfirmButton: false,
-                timer: 2500, /* দ্রুত অদৃশ্য হওয়ার জন্য */
-                timerProgressBar: true,
-                customClass: {
-                    container: 'swal2-container',
-                    popup: 'swal2-toast'
+        try {
+            const successful = document.execCommand('copy');
+            if (successful) {
+                Swal.fire({toast:true,position:'top-end',icon:'success',title:'নম্বর কপি করা হয়েছে!',showConfirmButton:false,timer:1500});
+                
+                const btn = document.getElementById(elementId);
+                if(btn){
+                    btn.style.backgroundColor = 'var(--success)'; 
+                    setTimeout(() => btn.style.backgroundColor = 'var(--accent)', 500);
                 }
+            } else {
+                throw new Error('Copy command failed');
+            }
+        } catch (err) {
+            console.error('Copy failed: ', err);
+            Swal.fire({
+                icon:'warning',
+                title:'কপি করতে সমস্যা',
+                text:`এই নম্বরটি ম্যানুয়ালি কপি করুন: ${text}`,
+                confirmButtonText: 'ঠিক আছে'
             });
+        } finally {
+            document.body.removeChild(textarea);
         }
-    </script>
+    }
+
+    // Function to handle form submission
+    function handleFormSubmit(e, product) {
+        e.preventDefault();
+
+        const name = document.getElementById('ord_name').value.trim();
+        const whatsapp = document.getElementById('ord_whatsapp').value.trim();
+        const paymentType = document.getElementById('ord_payment').value;
+        const txnid = document.getElementById('ord_txnid').value.trim();
+        const notes = document.getElementById('ord_notes').value.trim();
+
+        if(!name || !whatsapp){
+            Swal.fire({icon:'warning', title:'Error', text:'নাম এবং WhatsApp নম্বর আবশ্যক।'});
+            return;
+        }
+        
+        if (paymentType !== 'Cash on Delivery' && !txnid) {
+            Swal.fire({icon:'warning', title:'Error', text:'অনলাইন পেমেন্টের জন্য ট্রানজ্যাকশন আইডি আবশ্যক।'});
+            return;
+        }
+
+        const orderData = {
+            productId: product.id,
+            productName: product.name,
+            price: product.displayPrice,
+            customerName: name,
+            whatsappNumber: whatsapp,
+            paymentType: paymentType,
+            transactionId: paymentType !== 'Cash on Delivery' ? txnid : 'N/A',
+            notes: notes,
+            status:'Pending Payment/COD',
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        };
+
+        Swal.fire({title:'<i class="fa-solid fa-hourglass-start fa-spin"></i> Submitting Order...', allowOutsideClick:false, didOpen:()=>Swal.showLoading()});
+          
+        db.collection('orders').add(orderData).then(docRef=>{
+            Swal.close();
+            renderReceipt(docRef.id, orderData, product);
+        }).catch(err=>{
+            console.error(err);
+            Swal.fire({icon:'error',title:'Error',text:'অর্ডার জমা দিতে ব্যর্থ হয়েছে। আবার চেষ্টা করুন।'});
+        });
+    }
+
+    // Function to download receipt as image
+    function downloadReceipt(element, filename) {
+        const scale = 2; 
+        domtoimage.toPng(element, {
+            width: element.clientWidth * scale,
+            height: element.clientHeight * scale,
+            style: {
+                transform: 'scale(' + scale + ')',
+                transformOrigin: 'top left'
+            }
+        })
+        .then(function (dataUrl) {
+            var link = document.createElement('a');
+            link.download = filename;
+            link.href = dataUrl;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        })
+        .catch(function (error) {
+            console.error('Receipt download failed!', error);
+            Swal.fire({icon:'error',title:'ডাউনলোড ব্যর্থ',text:'রসিদ ইমেজ তৈরি করা যায়নি।'});
+        });
+    }
+
+    // Function to render the success/receipt page
+    function renderReceipt(orderId, order, product) {
+        document.getElementById('main-header').innerHTML = `
+            <button onclick="renderProductList()"><i class="fa-solid fa-arrow-left"></i></button>
+            <h2><i class="fa-solid fa-circle-check"></i> Order Successful!</h2>
+        `;
+        window.scrollTo(0, 0); // Scroll to top
+
+        const createdTime = new Date().toLocaleString('bn-BD', { timeZone: 'Asia/Dhaka' });
+
+        const receiptHTML = `
+            <div class="form-container">
+                <div id="receipt-to-download" style="padding:25px; background:#fff; border:2px solid var(--success); border-radius:10px;">
+                    <h3 style="text-align:center; color:var(--success); margin-bottom:20px; border-bottom: 2px solid var(--success); padding-bottom: 10px; font-size: 24px;"><i class="fa-solid fa-receipt"></i> FF SERVICE ORDER RECEIPT </h3>
+                    <div class="receipt-info" style="font-size:16px; line-height: 2.0;">
+                        <div style="font-size:20px; font-weight:700; color:var(--accent); margin-bottom: 10px;"><i class="fa-solid fa-box"></i> Product: ${product.name}</div>
+                        <div style="background:#e9f7ee; padding: 10px; border-radius: 6px;"><strong>Order ID:</strong> <span style="color:var(--danger); font-weight: 700;">${orderId}</span></div>
+                        <div><strong>Price:</strong> <span style="color:var(--success); font-weight:800; font-size:24px;">${order.price}</span></div>
+                        <hr style="border:0; border-top:1px dashed #ced4da; margin:15px 0;">
+                        <div><i class="fa-solid fa-user"></i> <strong>Customer:</strong> ${order.customerName}</div>
+                        <div><i class="fa-brands fa-whatsapp"></i> <strong>WhatsApp:</strong> ${order.whatsappNumber}</div>
+                        <div><i class="fa-solid fa-money-bill-transfer"></i> <strong>Payment:</strong> ${order.paymentType}</div>
+                        ${order.paymentType !== 'Cash on Delivery' ? 
+                            `<div><i class="fa-solid fa-hashtag"></i> <strong>TXN ID:</strong> <span style="color:var(--danger); font-weight:700;">${order.transactionId}</span></div>` : ''}
+                        <div style="padding-top:10px; color:var(--muted); font-size:14px;"><strong>Time:</strong> ${createdTime}</div>
+                    </div>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:15px;margin-top:30px;">
+                    <button id="downloadReceiptBtn" class="btn" style="background:var(--accent-2);color:#fff;"><i class="fa-solid fa-cloud-arrow-down"></i> রসিদ ডাউনলোড করুন (PNG)</button>
+                    <a href="https://wa.me/message/3CECY4PPRT6TO1?text=${encodeURIComponent('Hello SWYGEN, I have placed an order. My Order ID is: '+orderId + '. Please check my order details. Thank you.')}" target="_blank" class="btn" style="background:#25D366;color:#fff;text-decoration:none;text-align:center;"><i class="fa-brands fa-whatsapp"></i> WhatsApp এ যোগাযোগ করুন</a>
+                </div>
+            </div>
+        `;
+        appContent.innerHTML = receiptHTML;
+
+        document.getElementById('downloadReceiptBtn').addEventListener('click', () => {
+            const receiptElement = document.getElementById('receipt-to-download');
+            downloadReceipt(receiptElement, `SWYGEN_Order_${orderId}.png`);
+        });
+    }
+
+    // Initialize the application
+    document.addEventListener('DOMContentLoaded', renderProductList);
+  </script>
 </body>
 </html>
+
 <!DOCTYPE html>
 <html lang="bn">
 <head>
@@ -1366,4 +1511,3 @@ document.addEventListener('DOMContentLoaded', (event) => {
     });
 });
 </script>
-
